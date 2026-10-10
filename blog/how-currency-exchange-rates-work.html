@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#f6f5f4">
+  <title>How currency exchange rates work - UnitPulse Blog</title>
+  <link rel="icon" type="image/svg+xml" href="../img/unitpulse-icon.svg">
+  <meta name="description" content="What an exchange rate is, why a bank or bureau shows a different number, and what UnitPulse means by a live rate versus an approximate offline table.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Source+Serif+4:opsz,wght@8..60,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../styles.css?v=1">
+</head>
+<body>
+  <header class="site-header">
+    <div class="container">
+      <nav class="site-nav" aria-label="Primary">
+        <a href="../index.html" class="logo"><img class="logo-icon" src="../img/unitpulse-icon.svg" alt="" width="28" height="28">UnitPulse</a>
+        <button class="nav-toggle" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="primary-menu" onclick="var h=this.closest('.site-header'),o=h.classList.toggle('nav-open');this.setAttribute('aria-expanded',o);this.setAttribute('aria-label',o?'Close menu':'Open menu')"><span class="nav-toggle-bars" aria-hidden="true"><span></span><span></span><span></span></span>Menu</button>
+        <ul class="nav-links" id="primary-menu">
+          <li><a href="../index.html">Home</a></li><li><a href="../currency.html">Currency</a></li><li><a href="../length.html">Length</a></li><li><a href="../weight.html">Weight</a></li><li><a href="../temperature.html">Temperature</a></li>
+          <li class="nav-more"><details class="nav-details"><summary>More</summary><ul id="more-menu"><li><a href="../volume.html">Volume</a></li><li><a href="../area.html">Area</a></li><li><a href="../speed-fuel.html">Speed & Fuel</a></li><li><a href="../timezone.html">Time Zone</a></li></ul></details></li>
+          <li><a href="../blog.html" class="active" aria-current="page">Blog</a></li><li><a href="../about.html">About</a></li><li><a href="../contact.html">Contact</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+  <main class="page-wrap"><div class="container"><article class="article">
+      <header class="article-header">
+        <h1>How currency exchange rates work</h1>
+        <div class="post-meta"><span class="pill pill-coral">Money</span><time datetime="2026-10-02">October 2, 2026</time><span class="post-meta-sep" aria-hidden="true">&middot;</span><span class="post-read-time">2 min read</span></div>
+        <p class="article-byline">By UnitPulse team</p>
+      </header>
+      <p class="article-lede">A rate is a price: how much of one currency it takes to buy another. The figure on a converter, a card receipt and a bureau window are related, and they are not the same number.</p>
+      <div class="article-body">
+<h2>A rate is a price</h2>
+<p>If 1 euro buys 37.57 Thai baht, the euro is the base and the baht is the quote. Flip it and 1 baht buys about 0.027 euro. Both sentences describe the same price. Converters let you pick either direction so you do not have to do that division by hand.</p>
+<p>Rates move because people and institutions are buying and selling currencies all day: trade, tourism, investment and central banks. A rate published once a day is a snapshot, not a promise that a shop will honour it an hour later.</p>
+<h2>Where UnitPulse gets its number</h2>
+<p>The currency tool asks <a href="https://www.frankfurter.app/">Frankfurter</a> for the latest European Central Bank reference rates. Those rates are set on business days, around 16:00 Central European Time, and they are a standard mid-market reference. They are not a live price from a trading desk, and they are not a quote you can spend.</p>
+<p>The page shows the rate date next to the result. On a Saturday you will usually still see Friday’s reference, because the central bank did not publish a new one.</p>
+<h2>Why a bank or a booth differs</h2>
+<p>A reference rate has no spread. A bank, card network or bureau de change makes money by buying at one price and selling at another, and it may add a commission or a foreign-transaction fee on top. Weekend and airport rates are often worse than a weekday card rate. None of that is a mistake in the converter. It is a different product.</p>
+<p>Use the reference figure to judge an offer (“this booth is 4% off the reference”), not as the amount a transfer will settle for. For a large payment, ask the provider for the all-in amount in the currency you actually pay.</p>
+<h2>What “approximate, offline” means</h2>
+<p>The tool needs the network only for that rate request. When the request works, the rates are saved in this browser. Next time, if the network fails, you see those saved rates, labelled as saved and offline, with the date they were published.</p>
+<p>If this browser has never saved a rate, the page uses a small table built into it. That table is the European Central Bank reference from 9 October 2026, when 1 euro was 37.574 baht, and the page marks it <strong>approximate, offline</strong>. It is a fallback so the converter still runs on a plane, not a live market.</p>
+<h2>A quick reading habit</h2>
+<p>Check three things before you trust a figure: the date on the rate, whether the label says live, saved or approximate, and how far the offer in front of you sits from the reference. The converter remembers the last currencies you picked. It does not store the amounts on a server.</p></div>
+      <aside class="article-callout" aria-label="Try it"><h2>Try it</h2><p>Compare a live European Central Bank reference rate with the figure your card or a bureau actually offers.</p>
+        <div class="callout-actions"><a href="../currency.html" class="btn btn-primary">Open the currency converter</a></div>
+      </aside>
+      <nav class="article-nav" aria-label="More articles">
+        <a class="article-nav-card" href="thai-land-units-explained.html" rel="prev"><span class="article-nav-label">Previous article</span><span class="article-nav-title">Thai land units explained: rai, ngan and wa</span></a>
+        
+      </nav>
+      <a href="../blog.html" class="back-link">Back to all articles</a>
+    </article></div></main>
+  <footer class="site-footer">
+    <div class="container">
+      <a href="../index.html" class="logo"><img class="logo-icon" src="../img/unitpulse-icon.svg" alt="" width="28" height="28">UnitPulse</a>
+      <ul class="footer-links">
+        <li><a href="../blog.html">Blog</a></li>
+        <li><a href="../privacy.html">Privacy Policy</a></li>
+        <li><a href="../terms.html">Terms of Service</a></li>
+        <li><a href="../about.html">About Us</a></li>
+        <li><a href="../contact.html">Contact</a></li>
+        <li><a href="../dmca.html">DMCA</a></li>
+      </ul>
+      <p class="footer-sister"><a href="https://janvanhal.github.io/netpulse/">Also from us: NetPulse network tools</a></p>
+      <p class="footer-copy">&copy; 2026 UnitPulse. Free tools, privacy first.</p>
+    </div>
+  </footer>
+  
+</body>
+</html>

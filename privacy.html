@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#f6f5f4">
+  <title>Privacy Policy - UnitPulse</title>
+  <link rel="icon" type="image/svg+xml" href="img/unitpulse-icon.svg">
+  <meta name="description" content="How UnitPulse handles information: local storage on your device, currency-rate requests, and advertising placeholders.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Source+Serif+4:opsz,wght@8..60,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css?v=1">
+</head>
+<body>
+  <header class="site-header">
+    <div class="container">
+      <nav class="site-nav" aria-label="Primary">
+        <a href="index.html" class="logo"><img class="logo-icon" src="img/unitpulse-icon.svg" alt="" width="28" height="28">UnitPulse</a>
+        <button class="nav-toggle" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="primary-menu" onclick="var h=this.closest('.site-header'),o=h.classList.toggle('nav-open');this.setAttribute('aria-expanded',o);this.setAttribute('aria-label',o?'Close menu':'Open menu')"><span class="nav-toggle-bars" aria-hidden="true"><span></span><span></span><span></span></span>Menu</button>
+        <ul class="nav-links" id="primary-menu">
+          <li><a href="index.html">Home</a></li><li><a href="currency.html">Currency</a></li><li><a href="length.html">Length</a></li><li><a href="weight.html">Weight</a></li><li><a href="temperature.html">Temperature</a></li>
+          <li class="nav-more"><details class="nav-details"><summary>More</summary><ul id="more-menu"><li><a href="volume.html">Volume</a></li><li><a href="area.html">Area</a></li><li><a href="speed-fuel.html">Speed & Fuel</a></li><li><a href="timezone.html">Time Zone</a></li></ul></details></li>
+          <li><a href="blog.html">Blog</a></li><li><a href="about.html">About</a></li><li><a href="contact.html">Contact</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+  <main class="page-wrap"><div class="container"><div class="reading-panel">
+      <h1>Privacy Policy</h1>
+      <p class="lede">What stays on your device, and the one request the currency tool makes.</p>
+      <p class="meta">Last updated: October 2026</p>
+      <div class="policy-section"><h3>No account</h3>
+    <p>UnitPulse does not ask you to register, and it does not keep a profile of you on a server.</p></div>
+    <div class="policy-section"><h3>What this browser stores</h3>
+    <p>The last units you chose, the decimal setting, cached exchange rates, and your time-zone city list are stored in this browser only (localStorage). Amounts you type are not written there. Clearing site data for this site removes them.</p></div>
+    <div class="policy-section"><h3>Currency rates</h3>
+    <p>The currency converter requests rates from <a href="https://api.frankfurter.app/latest">api.frankfurter.app</a>. That address redirects to <a href="https://api.frankfurter.dev/v1/latest?from=EUR">api.frankfurter.dev</a> without the headers a browser needs to follow the redirect, so the page then requests the second address directly. Either request reveals your IP address to Frankfurter and its host. The response is a table of reference rates. Other converters do not contact a server.</p></div>
+    <div class="policy-section"><h3>Advertising</h3>
+    <p>Pages include slots for Google AdSense. The publisher ID on this site is the placeholder <code>ca-pub-1234567890</code> until a real ID is added, and the ad script is not loaded. If ads are turned on later, Google may use cookies as described in its own policy. You can review ad personalisation at <a href="https://adssettings.google.com">Google ad settings</a>.</p></div>
+    <div class="policy-section"><h3>Contact</h3>
+    <p>Questions about this policy: <a href="mailto:contact@unitpulse.example">contact@unitpulse.example</a>.</p></div>
+      <a href="index.html" class="back-link">Return to Home</a>
+    </div></div></main>
+  <footer class="site-footer">
+    <div class="container">
+      <a href="index.html" class="logo"><img class="logo-icon" src="img/unitpulse-icon.svg" alt="" width="28" height="28">UnitPulse</a>
+      <ul class="footer-links">
+        <li><a href="blog.html">Blog</a></li>
+        <li><a href="privacy.html">Privacy Policy</a></li>
+        <li><a href="terms.html">Terms of Service</a></li>
+        <li><a href="about.html">About Us</a></li>
+        <li><a href="contact.html">Contact</a></li>
+        <li><a href="dmca.html">DMCA</a></li>
+      </ul>
+      <p class="footer-sister"><a href="https://janvanhal.github.io/netpulse/">Also from us: NetPulse network tools</a></p>
+      <p class="footer-copy">&copy; 2026 UnitPulse. Free tools, privacy first.</p>
+    </div>
+  </footer>
+  
+</body>
+</html>

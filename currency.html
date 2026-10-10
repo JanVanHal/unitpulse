@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#f6f5f4">
+  <title>Currency Converter - UnitPulse</title>
+  <link rel="icon" type="image/svg+xml" href="img/unitpulse-icon.svg">
+  <meta name="description" content="Convert currencies with European Central Bank reference rates via Frankfurter. Defaults to Thai baht and euro, and works offline from saved or approximate rates.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Source+Serif+4:opsz,wght@8..60,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css?v=1">
+</head>
+<body>
+  <header class="site-header">
+    <div class="container">
+      <nav class="site-nav" aria-label="Primary">
+        <a href="index.html" class="logo"><img class="logo-icon" src="img/unitpulse-icon.svg" alt="" width="28" height="28">UnitPulse</a>
+        <button class="nav-toggle" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="primary-menu" onclick="var h=this.closest('.site-header'),o=h.classList.toggle('nav-open');this.setAttribute('aria-expanded',o);this.setAttribute('aria-label',o?'Close menu':'Open menu')"><span class="nav-toggle-bars" aria-hidden="true"><span></span><span></span><span></span></span>Menu</button>
+        <ul class="nav-links" id="primary-menu">
+          <li><a href="index.html">Home</a></li><li><a href="currency.html" class="active" aria-current="page">Currency</a></li><li><a href="length.html">Length</a></li><li><a href="weight.html">Weight</a></li><li><a href="temperature.html">Temperature</a></li>
+          <li class="nav-more"><details class="nav-details"><summary>More</summary><ul id="more-menu"><li><a href="volume.html">Volume</a></li><li><a href="area.html">Area</a></li><li><a href="speed-fuel.html">Speed & Fuel</a></li><li><a href="timezone.html">Time Zone</a></li></ul></details></li>
+          <li><a href="blog.html">Blog</a></li><li><a href="about.html">About</a></li><li><a href="contact.html">Contact</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+  <main class="page-wrap"><div class="container">
+    <div class="tool-panel"><div class="tool-header"><h1>Currency Converter</h1><p>Live European Central Bank reference rates, with baht and euro ready to go.</p></div>
+    <noscript><p class="panel-note">Turn on JavaScript to convert. Numbers stay in this browser.</p></noscript>
+    <form id="currency-tool" novalidate>
+    <div class="conv-top">
+      <div class="input-group conv-amount">
+        <label for="currency-amount">Amount</label>
+        <input id="currency-amount" data-field="amount" type="text" inputmode="decimal" autocomplete="off" spellcheck="false" value="1" aria-describedby="currency-error">
+      </div>
+      <div class="input-group">
+        <label for="currency-from">From</label>
+        <select id="currency-from" data-field="from"><option value="AUD">Australian Dollar (AUD)</option><option value="BRL">Brazilian Real (BRL)</option><option value="CAD">Canadian Dollar (CAD)</option><option value="CHF">Swiss Franc (CHF)</option><option value="CNY">Chinese Renminbi Yuan (CNY)</option><option value="CZK">Czech Koruna (CZK)</option><option value="DKK">Danish Krone (DKK)</option><option value="EUR">Euro (EUR)</option><option value="GBP">British Pound (GBP)</option><option value="HKD">Hong Kong Dollar (HKD)</option><option value="HUF">Hungarian Forint (HUF)</option><option value="IDR">Indonesian Rupiah (IDR)</option><option value="ILS">Israeli New Shekel (ILS)</option><option value="INR">Indian Rupee (INR)</option><option value="ISK">Icelandic Króna (ISK)</option><option value="JPY">Japanese Yen (JPY)</option><option value="KRW">South Korean Won (KRW)</option><option value="MXN">Mexican Peso (MXN)</option><option value="MYR">Malaysian Ringgit (MYR)</option><option value="NOK">Norwegian Krone (NOK)</option><option value="NZD">New Zealand Dollar (NZD)</option><option value="PHP">Philippine Peso (PHP)</option><option value="PLN">Polish Złoty (PLN)</option><option value="RON">Romanian Leu (RON)</option><option value="SEK">Swedish Krona (SEK)</option><option value="SGD">Singapore Dollar (SGD)</option><option value="THB" selected>Thai Baht (THB)</option><option value="TRY">Turkish Lira (TRY)</option><option value="USD">United States Dollar (USD)</option><option value="ZAR">South African Rand (ZAR)</option></select>
+      </div>
+      <div class="conv-swap">
+        <button type="button" class="btn btn-outlined" data-field="swap" aria-label="Swap units">Swap</button>
+      </div>
+      <div class="input-group">
+        <label for="currency-to">To</label>
+        <select id="currency-to" data-field="to"><option value="AUD">Australian Dollar (AUD)</option><option value="BRL">Brazilian Real (BRL)</option><option value="CAD">Canadian Dollar (CAD)</option><option value="CHF">Swiss Franc (CHF)</option><option value="CNY">Chinese Renminbi Yuan (CNY)</option><option value="CZK">Czech Koruna (CZK)</option><option value="DKK">Danish Krone (DKK)</option><option value="EUR" selected>Euro (EUR)</option><option value="GBP">British Pound (GBP)</option><option value="HKD">Hong Kong Dollar (HKD)</option><option value="HUF">Hungarian Forint (HUF)</option><option value="IDR">Indonesian Rupiah (IDR)</option><option value="ILS">Israeli New Shekel (ILS)</option><option value="INR">Indian Rupee (INR)</option><option value="ISK">Icelandic Króna (ISK)</option><option value="JPY">Japanese Yen (JPY)</option><option value="KRW">South Korean Won (KRW)</option><option value="MXN">Mexican Peso (MXN)</option><option value="MYR">Malaysian Ringgit (MYR)</option><option value="NOK">Norwegian Krone (NOK)</option><option value="NZD">New Zealand Dollar (NZD)</option><option value="PHP">Philippine Peso (PHP)</option><option value="PLN">Polish Złoty (PLN)</option><option value="RON">Romanian Leu (RON)</option><option value="SEK">Swedish Krona (SEK)</option><option value="SGD">Singapore Dollar (SGD)</option><option value="THB">Thai Baht (THB)</option><option value="TRY">Turkish Lira (TRY)</option><option value="USD">United States Dollar (USD)</option><option value="ZAR">South African Rand (ZAR)</option></select>
+      </div>
+    </div>
+    <p class="field-error" id="currency-error" data-field="error" role="alert"></p>
+    <div class="chip-row" role="group" aria-label="Quick picks for the From currency"><span class="seg-label">Quick from</span><button type="button" class="btn btn-outlined" data-ccy="THB">THB</button><button type="button" class="btn btn-outlined" data-ccy="EUR">EUR</button><button type="button" class="btn btn-outlined" data-ccy="USD">USD</button><button type="button" class="btn btn-outlined" data-ccy="GBP">GBP</button><button type="button" class="btn btn-outlined" data-ccy="JPY">JPY</button><button type="button" class="btn btn-outlined" data-ccy="CNY">CNY</button><button type="button" class="btn btn-outlined" data-ccy="AUD">AUD</button><button type="button" class="btn btn-outlined" data-ccy="SGD">SGD</button></div>
+            <p class="panel-note block-gap">Live rates come from <a href="https://www.frankfurter.app/">Frankfurter</a>, which republishes European Central Bank reference rates. If that request fails, the tool uses rates saved in this browser, or a built-in table marked approximate, offline.</p>
+    <div class="seg" role="group" aria-label="Decimal places">
+      <span class="seg-label">Decimals</span>
+      <button type="button" class="btn btn-outlined" data-digits="2" aria-pressed="true" aria-label="2 decimal places">2</button><button type="button" class="btn btn-outlined" data-digits="4" aria-pressed="false" aria-label="4 decimal places">4</button><button type="button" class="btn btn-outlined" data-digits="6" aria-pressed="false" aria-label="6 decimal places">6</button>
+    </div>
+    <div class="result-section show" aria-live="polite">
+      <h3>Result</h3>
+      <div class="result-item">
+        <span class="result-label">Converted</span>
+        <div class="result-line">
+          <span class="result-value result-hero" data-field="result">—</span>
+          <button type="button" class="btn btn-ghost" data-field="copy" disabled>Copy</button>
+        </div>
+      </div>
+      
+      <p class="caption tool-caption" data-field="caption"></p>
+    </div>
+  </form></div>
+    <div class="tool-panel conv-follow">
+    <h2>Common conversions</h2>
+    <p class="panel-note">A reference rate is a mid-market snapshot, not the price a bank or bureau will offer you.</p>
+    <div class="table-wrap"><table class="conv-table"><thead><tr><th scope="col">Conversion</th><th scope="col">Equals</th></tr></thead><tbody><tr><td>1 euro (9 Oct 2026, offline table)</td><td>37.574 baht</td></tr><tr><td>1 baht (same table)</td><td>0.026614 euro</td></tr><tr><td>1 euro (same table)</td><td>1.1206 US dollar</td></tr><tr><td>1 pound sterling (same table)</td><td>1.1798 euro</td></tr></tbody></table></div>
+  </div>
+    <div class="tool-panel conv-follow"><h2>FAQ</h2><div class="faq-list"><details><summary>Where do the rates come from?</summary><p>From <a href="https://www.frankfurter.app/">Frankfurter</a>, using European Central Bank reference rates. Those rates are published on business days. They are a standard mid-market reference, not a price you can trade at.</p></details><details><summary>Why is this different from my bank or a currency booth?</summary><p>A reference rate has no spread. A bank, card or bureau buys and sells at different prices and may add a fee. Weekend and airport rates are often further from the reference. Use this figure to judge an offer, not as the amount a transfer will settle for.</p></details><details><summary>What does “approximate, offline” mean?</summary><p>The page saves the last rates it fetched. If you are offline after that, it uses the saved rates and says so. If this browser has never saved any, it uses a table of European Central Bank rates from 9 October 2026 built into the page, and it labels that table approximate, offline.</p></details><details><summary>Which currencies can I convert?</summary><p>The quick row is baht, euro, US dollar, pound, yen, yuan, Australian dollar and Singapore dollar. The lists also include the rest of the currencies in the European Central Bank reference set, such as Swiss franc, baht’s neighbours, and the Nordic currencies.</p></details><details><summary>Do you keep what I convert?</summary><p>No server stores the amounts. This browser remembers the last currencies you picked, the decimal setting, and the cached rates. Clearing site data for UnitPulse removes them.</p></details></div></div>
+  </div>
+  <section class="ad-section">
+      <div class="container">
+        <div class="ad-container">
+          <ins class="adsbygoogle"
+               style="display:block; width:100%; height:90px;"
+               data-ad-client="ca-pub-1234567890"
+               data-ad-slot="1234567890"
+               data-ad-format="auto"
+               data-full-width-responsive="true"></ins>
+        </div>
+      </div>
+    </section>
+  </main>
+  <footer class="site-footer">
+    <div class="container">
+      <a href="index.html" class="logo"><img class="logo-icon" src="img/unitpulse-icon.svg" alt="" width="28" height="28">UnitPulse</a>
+      <ul class="footer-links">
+        <li><a href="blog.html">Blog</a></li>
+        <li><a href="privacy.html">Privacy Policy</a></li>
+        <li><a href="terms.html">Terms of Service</a></li>
+        <li><a href="about.html">About Us</a></li>
+        <li><a href="contact.html">Contact</a></li>
+        <li><a href="dmca.html">DMCA</a></li>
+      </ul>
+      <p class="footer-sister"><a href="https://janvanhal.github.io/netpulse/">Also from us: NetPulse network tools</a></p>
+      <p class="footer-copy">&copy; 2026 UnitPulse. Free tools, privacy first.</p>
+    </div>
+  </footer>
+  <script>
+function parseNum(raw) {
+  let s = String(raw == null ? '' : raw).trim().replace(/[\s\u00a0\u202f]/g, '');
+  if (!s) return null;
+  const commas = s.split(',').length - 1;
+  const hasComma = commas > 0;
+  const hasDot = s.indexOf('.') !== -1;
+  if (hasComma && hasDot) {
+    if (s.lastIndexOf(',') > s.lastIndexOf('.')) s = s.replace(/\./g, '').replace(',', '.');
+    else s = s.replace(/,/g, '');
+  } else if (hasComma) {
+    if (commas > 1) return NaN;
+    s = s.replace(',', '.');
+  }
+  s = s.replace(/[.,]$/, '');
+  if (!/^[+-]?(?:\d+)(?:\.\d+)?$/.test(s)) return NaN;
+  const n = Number(s);
+  return Number.isFinite(n) ? n : NaN;
+}
+
+function formatNum(n, digits) {
+  if (!Number.isFinite(n)) return '—';
+  const d = digits | 0;
+  const abs = Math.abs(n);
+  if (n !== 0 && (abs >= 1e12 || abs < 10 ** (-d))) return n.toExponential(d);
+  const f = 10 ** d;
+  const rounded = Math.round((n + Number.EPSILON) * f) / f;
+  const neg = rounded < 0;
+  let s = Math.abs(rounded).toFixed(d);
+  if (s.indexOf('.') !== -1) s = s.replace(/0+$/, '').replace(/\.$/, '');
+  const bits = s.split('.');
+  bits[0] = bits[0].replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+  return (neg ? '-' : '') + (bits[1] ? bits[0] + '.' + bits[1] : bits[0]);
+}
+
+function plainNum(n, digits) {
+  return formatNum(n, digits).replace(/,/g, '');
+}
+
+function currencyConvert(amount, from, to, rates) {
+  const rate = (code) => (code === 'EUR' ? 1 : rates[code]);
+  const a = rate(from);
+  const b = rate(to);
+  if (!a || !b) return NaN;
+  return amount / a * b;
+}
+function loadState(key, fallback) {
+  try {
+    var raw = localStorage.getItem(key);
+    if (!raw) return fallback;
+    var data = JSON.parse(raw);
+    if (!data || typeof data !== 'object') return fallback;
+    return Object.assign({}, fallback, data);
+  } catch (e) {
+    return fallback;
+  }
+}
+
+function saveState(key, data) {
+  try { localStorage.setItem(key, JSON.stringify(data)); } catch (e) {}
+}
+
+function fallbackCopy(text, done, captionEl) {
+  var ta = document.createElement('textarea');
+  ta.value = text;
+  ta.setAttribute('readonly', '');
+  ta.style.position = 'fixed';
+  ta.style.left = '-9999px';
+  document.body.appendChild(ta);
+  ta.select();
+  var ok = false;
+  try { ok = document.execCommand('copy'); } catch (e) { ok = false; }
+  document.body.removeChild(ta);
+  if (ok) done();
+  else if (captionEl) captionEl.textContent = 'Copy failed. Select the result and copy it manually.';
+}
+
+function startUnitTool(cfg) {
+  var root = document.getElementById(cfg.root);
+  var q = function (name) { return root.querySelector('[data-field="' + name + '"]'); };
+  var amountEl = q('amount');
+  var fromEl = q('from');
+  var toEl = q('to');
+  var errEl = q('error');
+  var resultEl = q('result');
+  var captionEl = q('caption');
+  var copyBtn = q('copy');
+  var swapBtn = q('swap');
+  var state = loadState(cfg.key, cfg.defaults);
+  var digits = state.digits === 2 || state.digits === 4 || state.digits === 6 ? state.digits : cfg.defaults.digits;
+  var rawResult = null;
+
+  function unitById(id) {
+    for (var i = 0; i < cfg.units.length; i++) if (cfg.units[i].id === id) return cfg.units[i];
+    return null;
+  }
+  function unitShort(id) {
+    var u = unitById(id);
+    return u ? u.short : id;
+  }
+  function fillSelect(sel, value, fallback) {
+    sel.textContent = '';
+    cfg.units.forEach(function (u) {
+      var o = document.createElement('option');
+      o.value = u.id;
+      o.textContent = u.name;
+      o.dataset.short = u.short;
+      sel.appendChild(o);
+    });
+    sel.value = unitById(value) ? value : fallback;
+  }
+  fillSelect(fromEl, state.from || cfg.defaults.from, cfg.defaults.from);
+  fillSelect(toEl, state.to || cfg.defaults.to, cfg.defaults.to);
+  if (cfg.restore) cfg.restore(state);
+
+  function setDigits(d) {
+    digits = d;
+    root.querySelectorAll('[data-digits]').forEach(function (btn) {
+      btn.setAttribute('aria-pressed', Number(btn.getAttribute('data-digits')) === d ? 'true' : 'false');
+    });
+  }
+  setDigits(digits);
+
+  function persist() {
+    var data = { from: fromEl.value, to: toEl.value, digits: digits };
+    if (cfg.extendState) {
+      var extra = cfg.extendState();
+      if (extra) Object.keys(extra).forEach(function (k) { data[k] = extra[k]; });
+    }
+    saveState(cfg.key, data);
+  }
+
+  function clearResult(message, invalid) {
+    errEl.textContent = message || '';
+    if (invalid) amountEl.setAttribute('aria-invalid', 'true');
+    else amountEl.removeAttribute('aria-invalid');
+    resultEl.textContent = '—';
+    delete resultEl.dataset.raw;
+    rawResult = null;
+    copyBtn.disabled = true;
+    if (cfg.onClear) cfg.onClear();
+  }
+
+  function convert() {
+    var n = parseNum(amountEl.value);
+    if (n === null) {
+      clearResult('', false);
+      captionEl.textContent = 'Enter a number. A comma or a dot can mark the decimal.';
+      return;
+    }
+    if (Number.isNaN(n)) {
+      clearResult('Enter a number. A comma or a dot can mark the decimal.', true);
+      captionEl.textContent = '';
+      return;
+    }
+    var problem = cfg.validate ? cfg.validate(n, fromEl.value, toEl.value) : '';
+    if (problem) {
+      clearResult(problem, true);
+      captionEl.textContent = '';
+      return;
+    }
+    var out = cfg.convert(n, fromEl.value, toEl.value);
+    if (!Number.isFinite(out)) {
+      clearResult('That conversion is not available.', true);
+      captionEl.textContent = '';
+      return;
+    }
+    rawResult = plainNum(out, digits);
+    resultEl.dataset.raw = rawResult;
+    resultEl.textContent = formatNum(out, digits) + '\u00a0' + unitShort(toEl.value);
+    var ctx = { amount: n, from: fromEl.value, to: toEl.value, out: out, digits: digits };
+    if (cfg.caption) cfg.caption(captionEl, ctx);
+    else if (ctx.from === ctx.to) captionEl.textContent = 'Same unit, so the value does not change. Shown to ' + digits + ' decimal places.';
+    else captionEl.textContent = 'Exact value ' + formatNum(out, 8) + ' ' + unitShort(toEl.value) + ', shown to ' + digits + ' decimal places.';
+    copyBtn.disabled = false;
+    if (cfg.after) cfg.after(ctx);
+    persist();
+  }
+
+  amountEl.addEventListener('input', convert);
+  fromEl.addEventListener('change', convert);
+  toEl.addEventListener('change', convert);
+  swapBtn.addEventListener('click', function () {
+    var a = fromEl.value;
+    fromEl.value = toEl.value;
+    toEl.value = a;
+    convert();
+  });
+  root.querySelectorAll('[data-digits]').forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      setDigits(Number(btn.getAttribute('data-digits')));
+      convert();
+    });
+  });
+  root.addEventListener('submit', function (e) {
+    e.preventDefault();
+    convert();
+  });
+  copyBtn.addEventListener('click', function () {
+    if (rawResult == null) return;
+    var done = function () {
+      copyBtn.textContent = 'Copied';
+      window.setTimeout(function () { copyBtn.textContent = 'Copy'; }, 1500);
+    };
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(rawResult).then(done).catch(function () { fallbackCopy(rawResult, done, captionEl); });
+    } else fallbackCopy(rawResult, done, captionEl);
+  });
+  convert();
+  return {
+    convert: convert,
+    fromEl: fromEl,
+    toEl: toEl,
+    amountEl: amountEl,
+    getDigits: function () { return digits; }
+  };
+}
+
+var CCY_UNITS = [{"id":"AUD","name":"Australian Dollar (AUD)","short":"AUD"},{"id":"BRL","name":"Brazilian Real (BRL)","short":"BRL"},{"id":"CAD","name":"Canadian Dollar (CAD)","short":"CAD"},{"id":"CHF","name":"Swiss Franc (CHF)","short":"CHF"},{"id":"CNY","name":"Chinese Renminbi Yuan (CNY)","short":"CNY"},{"id":"CZK","name":"Czech Koruna (CZK)","short":"CZK"},{"id":"DKK","name":"Danish Krone (DKK)","short":"DKK"},{"id":"EUR","name":"Euro (EUR)","short":"EUR"},{"id":"GBP","name":"British Pound (GBP)","short":"GBP"},{"id":"HKD","name":"Hong Kong Dollar (HKD)","short":"HKD"},{"id":"HUF","name":"Hungarian Forint (HUF)","short":"HUF"},{"id":"IDR","name":"Indonesian Rupiah (IDR)","short":"IDR"},{"id":"ILS","name":"Israeli New Shekel (ILS)","short":"ILS"},{"id":"INR","name":"Indian Rupee (INR)","short":"INR"},{"id":"ISK","name":"Icelandic Króna (ISK)","short":"ISK"},{"id":"JPY","name":"Japanese Yen (JPY)","short":"JPY"},{"id":"KRW","name":"South Korean Won (KRW)","short":"KRW"},{"id":"MXN","name":"Mexican Peso (MXN)","short":"MXN"},{"id":"MYR","name":"Malaysian Ringgit (MYR)","short":"MYR"},{"id":"NOK","name":"Norwegian Krone (NOK)","short":"NOK"},{"id":"NZD","name":"New Zealand Dollar (NZD)","short":"NZD"},{"id":"PHP","name":"Philippine Peso (PHP)","short":"PHP"},{"id":"PLN","name":"Polish Złoty (PLN)","short":"PLN"},{"id":"RON","name":"Romanian Leu (RON)","short":"RON"},{"id":"SEK","name":"Swedish Krona (SEK)","short":"SEK"},{"id":"SGD","name":"Singapore Dollar (SGD)","short":"SGD"},{"id":"THB","name":"Thai Baht (THB)","short":"THB"},{"id":"TRY","name":"Turkish Lira (TRY)","short":"TRY"},{"id":"USD","name":"United States Dollar (USD)","short":"USD"},{"id":"ZAR","name":"South African Rand (ZAR)","short":"ZAR"}];
+var FALLBACK = {"date":"2026-10-09","base":"EUR","rates":{"AUD":1.6052,"BRL":5.6086,"CAD":1.5942,"CHF":0.9313,"CNY":7.4992,"CZK":24.369,"DKK":7.4751,"GBP":0.84763,"HKD":8.794,"HUF":365.08,"IDR":20036.94,"ILS":3.426,"INR":108.3965,"ISK":136.8,"JPY":177.34,"KRW":1503.27,"MXN":20.395,"MYR":4.5777,"NOK":10.7155,"NZD":1.9961,"PHP":70.397,"PLN":4.3835,"RON":5.3406,"SEK":11.1675,"SGD":1.4348,"THB":37.574,"TRY":55.1033,"USD":1.1206,"ZAR":18.527}};
+
+function longDate(iso) {
+  var months = ["January","February","March","April","May","June","July","August","September","October","November","December"];
+  var p = String(iso || "").split("-");
+  if (p.length !== 3 || !months[Number(p[1]) - 1]) return String(iso || "");
+  return Number(p[2]) + " " + months[Number(p[1]) - 1] + " " + p[0];
+}
+var savedRates = loadState("unitpulse:currency:rates", null);
+var currentRates = (savedRates && savedRates.rates && savedRates.date)
+  ? { date: savedRates.date, rates: savedRates.rates, origin: "cache" }
+  : { date: FALLBACK.date, rates: FALLBACK.rates, origin: "fallback" };
+var refreshing = currentRates.origin === "cache";
+function rateNote() {
+  var when = longDate(currentRates.date);
+  if (currentRates.origin === "live") return "European Central Bank reference rates via Frankfurter, " + when + ".";
+  if (currentRates.origin === "cache" && refreshing) return "Saved rates from " + when + ". Checking for a newer rate.";
+  if (currentRates.origin === "cache") return "Saved rates from " + when + ", offline.";
+  return "Approximate, offline. Built-in European Central Bank rates from " + longDate(FALLBACK.date) + ".";
+}
+var api = startUnitTool({
+  root: "currency-tool",
+  key: "unitpulse:currency",
+  units: CCY_UNITS,
+  defaults: { from: "THB", to: "EUR", digits: 2 },
+  convert: function (amount, from, to) { return currencyConvert(amount, from, to, currentRates.rates); },
+  validate: function (n) { return n < 0 ? "Enter zero or a positive number." : ""; },
+  caption: function (el, ctx) {
+    var per = currencyConvert(1, ctx.from, ctx.to, currentRates.rates);
+    var line = Number.isFinite(per) ? ("1 " + ctx.from + " = " + formatNum(per, 6) + " " + ctx.to + ". ") : "";
+    el.textContent = line + rateNote() + " Shown to " + ctx.digits + " decimal places.";
+  },
+  after: function (ctx) {
+    document.querySelectorAll("[data-ccy]").forEach(function (btn) {
+      btn.setAttribute("aria-pressed", btn.getAttribute("data-ccy") === ctx.from ? "true" : "false");
+    });
+  }
+});
+document.querySelectorAll("[data-ccy]").forEach(function (btn) {
+  btn.addEventListener("click", function () {
+    var code = btn.getAttribute("data-ccy");
+    if (api.toEl.value === code) api.toEl.value = api.fromEl.value;
+    api.fromEl.value = code;
+    api.convert();
+  });
+});
+function loadLive(url) {
+  var ctrl = new AbortController();
+  var timer = setTimeout(function () { ctrl.abort(); }, 8000);
+  return fetch(url, { signal: ctrl.signal, cache: "no-store" }).then(function (r) {
+    clearTimeout(timer);
+    if (!r.ok) throw new Error("bad status");
+    return r.json();
+  }, function (err) {
+    clearTimeout(timer);
+    throw err;
+  });
+}
+function acceptRates(data) {
+  if (!data || !data.rates || !data.date) throw new Error("bad payload");
+  currentRates = { date: data.date, rates: data.rates, origin: "live" };
+  refreshing = false;
+  saveState("unitpulse:currency:rates", { date: data.date, rates: data.rates });
+  api.convert();
+}
+// api.frankfurter.app 301s to api.frankfurter.dev without CORS headers, so a browser fetch of the first URL fails. Ask the address the prompt names, then the host it redirects to.
+loadLive("https://api.frankfurter.app/latest?from=EUR")
+  .catch(function () { return loadLive("https://api.frankfurter.dev/v1/latest?from=EUR"); })
+  .then(acceptRates)
+  .catch(function () { refreshing = false; api.convert(); });
+
+</script>
+</body>
+</html>

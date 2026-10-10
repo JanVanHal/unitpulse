@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#f6f5f4">
+  <title>Length Converter - UnitPulse</title>
+  <link rel="icon" type="image/svg+xml" href="img/unitpulse-icon.svg">
+  <meta name="description" content="Convert millimetres, centimetres, metres, kilometres, inches, feet, yards, miles and nautical miles, plus feet and inches.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Source+Serif+4:opsz,wght@8..60,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css?v=1">
+</head>
+<body>
+  <header class="site-header">
+    <div class="container">
+      <nav class="site-nav" aria-label="Primary">
+        <a href="index.html" class="logo"><img class="logo-icon" src="img/unitpulse-icon.svg" alt="" width="28" height="28">UnitPulse</a>
+        <button class="nav-toggle" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="primary-menu" onclick="var h=this.closest('.site-header'),o=h.classList.toggle('nav-open');this.setAttribute('aria-expanded',o);this.setAttribute('aria-label',o?'Close menu':'Open menu')"><span class="nav-toggle-bars" aria-hidden="true"><span></span><span></span><span></span></span>Menu</button>
+        <ul class="nav-links" id="primary-menu">
+          <li><a href="index.html">Home</a></li><li><a href="currency.html">Currency</a></li><li><a href="length.html" class="active" aria-current="page">Length</a></li><li><a href="weight.html">Weight</a></li><li><a href="temperature.html">Temperature</a></li>
+          <li class="nav-more"><details class="nav-details"><summary>More</summary><ul id="more-menu"><li><a href="volume.html">Volume</a></li><li><a href="area.html">Area</a></li><li><a href="speed-fuel.html">Speed & Fuel</a></li><li><a href="timezone.html">Time Zone</a></li></ul></details></li>
+          <li><a href="blog.html">Blog</a></li><li><a href="about.html">About</a></li><li><a href="contact.html">Contact</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+  <main class="page-wrap"><div class="container">
+    <div class="tool-panel"><div class="tool-header"><h1>Length Converter</h1><p>Convert metric and imperial lengths, including feet-and-inches and the nautical mile.</p></div>
+    <noscript><p class="panel-note">Turn on JavaScript to convert. Numbers stay in this browser.</p></noscript>
+    <form id="length-tool" novalidate>
+    <div class="conv-top">
+      <div class="input-group conv-amount">
+        <label for="length-amount">Amount</label>
+        <input id="length-amount" data-field="amount" type="text" inputmode="decimal" autocomplete="off" spellcheck="false" value="1" aria-describedby="length-error">
+      </div>
+      <div class="input-group">
+        <label for="length-from">From</label>
+        <select id="length-from" data-field="from"><option value="mm">Millimetres (mm)</option><option value="cm">Centimetres (cm)</option><option value="m">Metres (m)</option><option value="km">Kilometres (km)</option><option value="in">Inches (in)</option><option value="ft">Feet (ft)</option><option value="yd">Yards (yd)</option><option value="mi" selected>Miles (mi)</option><option value="nmi">Nautical miles (nmi)</option></select>
+      </div>
+      <div class="conv-swap">
+        <button type="button" class="btn btn-outlined" data-field="swap" aria-label="Swap units">Swap</button>
+      </div>
+      <div class="input-group">
+        <label for="length-to">To</label>
+        <select id="length-to" data-field="to"><option value="mm">Millimetres (mm)</option><option value="cm">Centimetres (cm)</option><option value="m">Metres (m)</option><option value="km" selected>Kilometres (km)</option><option value="in">Inches (in)</option><option value="ft">Feet (ft)</option><option value="yd">Yards (yd)</option><option value="mi">Miles (mi)</option><option value="nmi">Nautical miles (nmi)</option></select>
+      </div>
+    </div>
+    <p class="field-error" id="length-error" data-field="error" role="alert"></p>
+    
+    <div class="seg" role="group" aria-label="Decimal places">
+      <span class="seg-label">Decimals</span>
+      <button type="button" class="btn btn-outlined" data-digits="2" aria-pressed="true" aria-label="2 decimal places">2</button><button type="button" class="btn btn-outlined" data-digits="4" aria-pressed="false" aria-label="4 decimal places">4</button><button type="button" class="btn btn-outlined" data-digits="6" aria-pressed="false" aria-label="6 decimal places">6</button>
+    </div>
+    <div class="result-section show" aria-live="polite">
+      <h3>Result</h3>
+      <div class="result-item">
+        <span class="result-label">Converted</span>
+        <div class="result-line">
+          <span class="result-value result-hero" data-field="result">—</span>
+          <button type="button" class="btn btn-ghost" data-field="copy" disabled>Copy</button>
+        </div>
+      </div>
+      
+      <p class="caption tool-caption" data-field="caption"></p>
+    </div>
+  </form><div class="compound"><h2>Feet and inches</h2>
+          <p class="panel-note">12 inches = 1 foot. The reverse conversion carries 12 inches over into the next foot.</p>
+          <div class="pair-grid"><div class="input-group"><label for="feet">Feet</label><input id="feet" type="text" inputmode="decimal" autocomplete="off" spellcheck="false" value="6"></div><div class="input-group"><label for="inches">Inches</label><input id="inches" type="text" inputmode="decimal" autocomplete="off" spellcheck="false" value="2"></div></div>
+          <p class="field-error" id="ftInError" role="alert"></p>
+          <p class="sub-result" id="ftInOut">—</p>
+          <div class="block-gap"><div class="input-group"><label for="cmBack">Centimetres</label><input id="cmBack" type="text" inputmode="decimal" autocomplete="off" spellcheck="false" value="187.96"></div></div>
+          <p class="field-error" id="cmBackError" role="alert"></p>
+          <p class="sub-result" id="cmBackOut">—</p>
+        </div></div>
+    <div class="tool-panel conv-follow">
+    <h2>Common conversions</h2>
+    <p class="panel-note">Same factors as the converter. Figures below use those factors and may show more decimal places than the default view.</p>
+    <div class="table-wrap"><table class="conv-table"><thead><tr><th scope="col">Conversion</th><th scope="col">Equals</th></tr></thead><tbody><tr><td>1 inch</td><td>2.54 cm</td></tr><tr><td>1 foot</td><td>30.48 cm</td></tr><tr><td>1 metre</td><td>3.28084 ft</td></tr><tr><td>1 mile</td><td>1.609344 km</td></tr><tr><td>1 nautical mile</td><td>1.852 km</td></tr><tr><td>6 ft 2 in</td><td>187.96 cm</td></tr></tbody></table></div>
+  </div>
+    <div class="tool-panel conv-follow"><h2>FAQ</h2><div class="faq-list"><details><summary>Which inch and which mile are these?</summary><p>The international inch is exactly 2.54 cm, so a foot is exactly 30.48 cm. The international mile is exactly 1.609344 km.</p></details><details><summary>What is a nautical mile?</summary><p>A nautical mile is exactly 1,852 metres. It is the unit used for sea and air distance, and it is a little longer than a statute mile.</p></details><details><summary>How do feet and inches work?</summary><p>There are 12 inches in a foot. You can type 6 feet and 2 inches, or type centimetres and read them back as feet and inches. Extra inches, such as 14, are fine. The reverse conversion carries them into feet.</p></details><details><summary>Can I type a decimal comma?</summary><p>Yes. 1,5 and 1.5 are both one and a half. If you type both marks, the last one is the decimal mark.</p></details></div></div>
+  </div>
+  <section class="ad-section">
+      <div class="container">
+        <div class="ad-container">
+          <ins class="adsbygoogle"
+               style="display:block; width:100%; height:90px;"
+               data-ad-client="ca-pub-1234567890"
+               data-ad-slot="1234567890"
+               data-ad-format="auto"
+               data-full-width-responsive="true"></ins>
+        </div>
+      </div>
+    </section>
+  </main>
+  <footer class="site-footer">
+    <div class="container">
+      <a href="index.html" class="logo"><img class="logo-icon" src="img/unitpulse-icon.svg" alt="" width="28" height="28">UnitPulse</a>
+      <ul class="footer-links">
+        <li><a href="blog.html">Blog</a></li>
+        <li><a href="privacy.html">Privacy Policy</a></li>
+        <li><a href="terms.html">Terms of Service</a></li>
+        <li><a href="about.html">About Us</a></li>
+        <li><a href="contact.html">Contact</a></li>
+        <li><a href="dmca.html">DMCA</a></li>
+      </ul>
+      <p class="footer-sister"><a href="https://janvanhal.github.io/netpulse/">Also from us: NetPulse network tools</a></p>
+      <p class="footer-copy">&copy; 2026 UnitPulse. Free tools, privacy first.</p>
+    </div>
+  </footer>
+  <script>
+function parseNum(raw) {
+  let s = String(raw == null ? '' : raw).trim().replace(/[\s\u00a0\u202f]/g, '');
+  if (!s) return null;
+  const commas = s.split(',').length - 1;
+  const hasComma = commas > 0;
+  const hasDot = s.indexOf('.') !== -1;
+  if (hasComma && hasDot) {
+    if (s.lastIndexOf(',') > s.lastIndexOf('.')) s = s.replace(/\./g, '').replace(',', '.');
+    else s = s.replace(/,/g, '');
+  } else if (hasComma) {
+    if (commas > 1) return NaN;
+    s = s.replace(',', '.');
+  }
+  s = s.replace(/[.,]$/, '');
+  if (!/^[+-]?(?:\d+)(?:\.\d+)?$/.test(s)) return NaN;
+  const n = Number(s);
+  return Number.isFinite(n) ? n : NaN;
+}
+
+function formatNum(n, digits) {
+  if (!Number.isFinite(n)) return '—';
+  const d = digits | 0;
+  const abs = Math.abs(n);
+  if (n !== 0 && (abs >= 1e12 || abs < 10 ** (-d))) return n.toExponential(d);
+  const f = 10 ** d;
+  const rounded = Math.round((n + Number.EPSILON) * f) / f;
+  const neg = rounded < 0;
+  let s = Math.abs(rounded).toFixed(d);
+  if (s.indexOf('.') !== -1) s = s.replace(/0+$/, '').replace(/\.$/, '');
+  const bits = s.split('.');
+  bits[0] = bits[0].replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+  return (neg ? '-' : '') + (bits[1] ? bits[0] + '.' + bits[1] : bits[0]);
+}
+
+function plainNum(n, digits) {
+  return formatNum(n, digits).replace(/,/g, '');
+}
+
+function lengthToM(id) {
+  const t = { mm: 0.001, cm: 0.01, m: 1, km: 1000, in: 0.0254, ft: 0.3048, yd: 0.9144, mi: 1609.344, nmi: 1852 };
+  return t[id];
+}
+
+function lengthConvert(amount, from, to) {
+  return amount * lengthToM(from) / lengthToM(to);
+}
+
+function feetInchesToCm(feet, inches) {
+  return feet * 30.48 + inches * 2.54;
+}
+
+function cmToFeetInches(cm, digits) {
+  const neg = cm < 0;
+  const totalIn = Math.abs(cm) / 2.54;
+  let feet = Math.floor(totalIn / 12 + 1e-9);
+  let inches = totalIn - feet * 12;
+  const f = 10 ** (digits | 0);
+  let ri = Math.round(inches * f) / f;
+  if (ri >= 12) { feet += 1; ri = 0; }
+  return { neg: neg, feet: feet, inches: ri };
+}
+function loadState(key, fallback) {
+  try {
+    var raw = localStorage.getItem(key);
+    if (!raw) return fallback;
+    var data = JSON.parse(raw);
+    if (!data || typeof data !== 'object') return fallback;
+    return Object.assign({}, fallback, data);
+  } catch (e) {
+    return fallback;
+  }
+}
+
+function saveState(key, data) {
+  try { localStorage.setItem(key, JSON.stringify(data)); } catch (e) {}
+}
+
+function fallbackCopy(text, done, captionEl) {
+  var ta = document.createElement('textarea');
+  ta.value = text;
+  ta.setAttribute('readonly', '');
+  ta.style.position = 'fixed';
+  ta.style.left = '-9999px';
+  document.body.appendChild(ta);
+  ta.select();
+  var ok = false;
+  try { ok = document.execCommand('copy'); } catch (e) { ok = false; }
+  document.body.removeChild(ta);
+  if (ok) done();
+  else if (captionEl) captionEl.textContent = 'Copy failed. Select the result and copy it manually.';
+}
+
+function startUnitTool(cfg) {
+  var root = document.getElementById(cfg.root);
+  var q = function (name) { return root.querySelector('[data-field="' + name + '"]'); };
+  var amountEl = q('amount');
+  var fromEl = q('from');
+  var toEl = q('to');
+  var errEl = q('error');
+  var resultEl = q('result');
+  var captionEl = q('caption');
+  var copyBtn = q('copy');
+  var swapBtn = q('swap');
+  var state = loadState(cfg.key, cfg.defaults);
+  var digits = state.digits === 2 || state.digits === 4 || state.digits === 6 ? state.digits : cfg.defaults.digits;
+  var rawResult = null;
+
+  function unitById(id) {
+    for (var i = 0; i < cfg.units.length; i++) if (cfg.units[i].id === id) return cfg.units[i];
+    return null;
+  }
+  function unitShort(id) {
+    var u = unitById(id);
+    return u ? u.short : id;
+  }
+  function fillSelect(sel, value, fallback) {
+    sel.textContent = '';
+    cfg.units.forEach(function (u) {
+      var o = document.createElement('option');
+      o.value = u.id;
+      o.textContent = u.name;
+      o.dataset.short = u.short;
+      sel.appendChild(o);
+    });
+    sel.value = unitById(value) ? value : fallback;
+  }
+  fillSelect(fromEl, state.from || cfg.defaults.from, cfg.defaults.from);
+  fillSelect(toEl, state.to || cfg.defaults.to, cfg.defaults.to);
+  if (cfg.restore) cfg.restore(state);
+
+  function setDigits(d) {
+    digits = d;
+    root.querySelectorAll('[data-digits]').forEach(function (btn) {
+      btn.setAttribute('aria-pressed', Number(btn.getAttribute('data-digits')) === d ? 'true' : 'false');
+    });
+  }
+  setDigits(digits);
+
+  function persist() {
+    var data = { from: fromEl.value, to: toEl.value, digits: digits };
+    if (cfg.extendState) {
+      var extra = cfg.extendState();
+      if (extra) Object.keys(extra).forEach(function (k) { data[k] = extra[k]; });
+    }
+    saveState(cfg.key, data);
+  }
+
+  function clearResult(message, invalid) {
+    errEl.textContent = message || '';
+    if (invalid) amountEl.setAttribute('aria-invalid', 'true');
+    else amountEl.removeAttribute('aria-invalid');
+    resultEl.textContent = '—';
+    delete resultEl.dataset.raw;
+    rawResult = null;
+    copyBtn.disabled = true;
+    if (cfg.onClear) cfg.onClear();
+  }
+
+  function convert() {
+    var n = parseNum(amountEl.value);
+    if (n === null) {
+      clearResult('', false);
+      captionEl.textContent = 'Enter a number. A comma or a dot can mark the decimal.';
+      return;
+    }
+    if (Number.isNaN(n)) {
+      clearResult('Enter a number. A comma or a dot can mark the decimal.', true);
+      captionEl.textContent = '';
+      return;
+    }
+    var problem = cfg.validate ? cfg.validate(n, fromEl.value, toEl.value) : '';
+    if (problem) {
+      clearResult(problem, true);
+      captionEl.textContent = '';
+      return;
+    }
+    var out = cfg.convert(n, fromEl.value, toEl.value);
+    if (!Number.isFinite(out)) {
+      clearResult('That conversion is not available.', true);
+      captionEl.textContent = '';
+      return;
+    }
+    rawResult = plainNum(out, digits);
+    resultEl.dataset.raw = rawResult;
+    resultEl.textContent = formatNum(out, digits) + '\u00a0' + unitShort(toEl.value);
+    var ctx = { amount: n, from: fromEl.value, to: toEl.value, out: out, digits: digits };
+    if (cfg.caption) cfg.caption(captionEl, ctx);
+    else if (ctx.from === ctx.to) captionEl.textContent = 'Same unit, so the value does not change. Shown to ' + digits + ' decimal places.';
+    else captionEl.textContent = 'Exact value ' + formatNum(out, 8) + ' ' + unitShort(toEl.value) + ', shown to ' + digits + ' decimal places.';
+    copyBtn.disabled = false;
+    if (cfg.after) cfg.after(ctx);
+    persist();
+  }
+
+  amountEl.addEventListener('input', convert);
+  fromEl.addEventListener('change', convert);
+  toEl.addEventListener('change', convert);
+  swapBtn.addEventListener('click', function () {
+    var a = fromEl.value;
+    fromEl.value = toEl.value;
+    toEl.value = a;
+    convert();
+  });
+  root.querySelectorAll('[data-digits]').forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      setDigits(Number(btn.getAttribute('data-digits')));
+      convert();
+    });
+  });
+  root.addEventListener('submit', function (e) {
+    e.preventDefault();
+    convert();
+  });
+  copyBtn.addEventListener('click', function () {
+    if (rawResult == null) return;
+    var done = function () {
+      copyBtn.textContent = 'Copied';
+      window.setTimeout(function () { copyBtn.textContent = 'Copy'; }, 1500);
+    };
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(rawResult).then(done).catch(function () { fallbackCopy(rawResult, done, captionEl); });
+    } else fallbackCopy(rawResult, done, captionEl);
+  });
+  convert();
+  return {
+    convert: convert,
+    fromEl: fromEl,
+    toEl: toEl,
+    amountEl: amountEl,
+    getDigits: function () { return digits; }
+  };
+}
+
+var UNITS = [{"id":"mm","name":"Millimetres (mm)","short":"mm"},{"id":"cm","name":"Centimetres (cm)","short":"cm"},{"id":"m","name":"Metres (m)","short":"m"},{"id":"km","name":"Kilometres (km)","short":"km"},{"id":"in","name":"Inches (in)","short":"in"},{"id":"ft","name":"Feet (ft)","short":"ft"},{"id":"yd","name":"Yards (yd)","short":"yd"},{"id":"mi","name":"Miles (mi)","short":"mi"},{"id":"nmi","name":"Nautical miles (nmi)","short":"nmi"}];
+
+var api = startUnitTool({
+  root: "length-tool",
+  key: "unitpulse:length",
+  units: UNITS,
+  defaults: { from: "mi", to: "km", digits: 2 },
+  convert: function (amount, from, to) { return lengthConvert(amount, from, to); },
+  validate: function (n) { return n < 0 ? "Enter zero or a positive number." : ""; }
+});
+var feet = document.getElementById("feet");
+var inches = document.getElementById("inches");
+var ftOut = document.getElementById("ftInOut");
+var ftErr = document.getElementById("ftInError");
+var cmIn = document.getElementById("cmBack");
+var cmOut = document.getElementById("cmBackOut");
+var cmErr = document.getElementById("cmBackError");
+function bad(n) { return n !== null && (Number.isNaN(n) || n < 0); }
+function fromFeet() {
+  ftErr.textContent = "";
+  var ft = parseNum(feet.value);
+  var inch = parseNum(inches.value);
+  if (ft === null && inch === null) { ftOut.textContent = "—"; return; }
+  if (bad(ft) || bad(inch)) { ftErr.textContent = "Enter zero or a positive number."; ftOut.textContent = "—"; return; }
+  ftOut.textContent = formatNum(feetInchesToCm(ft || 0, inch || 0), api.getDigits()) + " cm";
+}
+function fromCm() {
+  cmErr.textContent = "";
+  var cm = parseNum(cmIn.value);
+  if (cm === null) { cmOut.textContent = "—"; return; }
+  if (Number.isNaN(cm) || cm < 0) { cmErr.textContent = "Enter zero or a positive number."; cmOut.textContent = "—"; return; }
+  var parts = cmToFeetInches(cm, api.getDigits());
+  cmOut.textContent = parts.feet + " ft " + formatNum(parts.inches, api.getDigits()) + " in";
+}
+feet.addEventListener("input", fromFeet);
+inches.addEventListener("input", fromFeet);
+cmIn.addEventListener("input", fromCm);
+document.getElementById("length-tool").querySelectorAll("[data-digits]").forEach(function (btn) {
+  btn.addEventListener("click", function () { fromFeet(); fromCm(); });
+});
+fromFeet();
+fromCm();
+
+</script>
+</body>
+</html>

@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#f6f5f4">
+  <title>Speed and Fuel Converter - UnitPulse</title>
+  <link rel="icon" type="image/svg+xml" href="img/unitpulse-icon.svg">
+  <meta name="description" content="Convert km/h, mph, m/s and knots, and fuel economy between L/100 km, US mpg, UK mpg and km/L.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Source+Serif+4:opsz,wght@8..60,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css?v=1">
+</head>
+<body>
+  <header class="site-header">
+    <div class="container">
+      <nav class="site-nav" aria-label="Primary">
+        <a href="index.html" class="logo"><img class="logo-icon" src="img/unitpulse-icon.svg" alt="" width="28" height="28">UnitPulse</a>
+        <button class="nav-toggle" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="primary-menu" onclick="var h=this.closest('.site-header'),o=h.classList.toggle('nav-open');this.setAttribute('aria-expanded',o);this.setAttribute('aria-label',o?'Close menu':'Open menu')"><span class="nav-toggle-bars" aria-hidden="true"><span></span><span></span><span></span></span>Menu</button>
+        <ul class="nav-links" id="primary-menu">
+          <li><a href="index.html">Home</a></li><li><a href="currency.html">Currency</a></li><li><a href="length.html">Length</a></li><li><a href="weight.html">Weight</a></li><li><a href="temperature.html">Temperature</a></li>
+          <li class="nav-more"><details class="nav-details is-current"><summary>More</summary><ul id="more-menu"><li><a href="volume.html">Volume</a></li><li><a href="area.html">Area</a></li><li><a href="speed-fuel.html" class="active" aria-current="page">Speed & Fuel</a></li><li><a href="timezone.html">Time Zone</a></li></ul></details></li>
+          <li><a href="blog.html">Blog</a></li><li><a href="about.html">About</a></li><li><a href="contact.html">Contact</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+  <main class="page-wrap"><div class="container">
+    <div class="tool-panel"><div class="tool-header"><h1>Speed and Fuel Converter</h1><p>Road speed, knots, and fuel economy in litres per 100 km or miles per gallon.</p></div>
+    <noscript><p class="panel-note">Turn on JavaScript to convert. Numbers stay in this browser.</p></noscript>
+    <div class="seg" role="group" aria-label="Which converter"><span class="seg-label">Show</span>
+          <button type="button" class="btn btn-outlined" id="modeSpeed" aria-pressed="true">Speed</button>
+          <button type="button" class="btn btn-outlined" id="modeFuel" aria-pressed="false">Fuel economy</button></div><form id="speed-tool" novalidate>
+    <div class="conv-top">
+      <div class="input-group conv-amount">
+        <label for="speed-amount">Amount</label>
+        <input id="speed-amount" data-field="amount" type="text" inputmode="decimal" autocomplete="off" spellcheck="false" value="100" aria-describedby="speed-error">
+      </div>
+      <div class="input-group">
+        <label for="speed-from">From</label>
+        <select id="speed-from" data-field="from"><option value="kmh" selected>Kilometres per hour (km/h)</option><option value="mph">Miles per hour (mph)</option><option value="mps">Metres per second (m/s)</option><option value="kn">Knots (kn)</option></select>
+      </div>
+      <div class="conv-swap">
+        <button type="button" class="btn btn-outlined" data-field="swap" aria-label="Swap units">Swap</button>
+      </div>
+      <div class="input-group">
+        <label for="speed-to">To</label>
+        <select id="speed-to" data-field="to"><option value="kmh">Kilometres per hour (km/h)</option><option value="mph" selected>Miles per hour (mph)</option><option value="mps">Metres per second (m/s)</option><option value="kn">Knots (kn)</option></select>
+      </div>
+    </div>
+    <p class="field-error" id="speed-error" data-field="error" role="alert"></p>
+    
+    <div class="seg" role="group" aria-label="Decimal places">
+      <span class="seg-label">Decimals</span>
+      <button type="button" class="btn btn-outlined" data-digits="2" aria-pressed="true" aria-label="2 decimal places">2</button><button type="button" class="btn btn-outlined" data-digits="4" aria-pressed="false" aria-label="4 decimal places">4</button><button type="button" class="btn btn-outlined" data-digits="6" aria-pressed="false" aria-label="6 decimal places">6</button>
+    </div>
+    <div class="result-section show" aria-live="polite">
+      <h3>Result</h3>
+      <div class="result-item">
+        <span class="result-label">Converted</span>
+        <div class="result-line">
+          <span class="result-value result-hero" data-field="result">—</span>
+          <button type="button" class="btn btn-ghost" data-field="copy" disabled>Copy</button>
+        </div>
+      </div>
+      
+      <p class="caption tool-caption" data-field="caption"></p>
+    </div>
+  </form><form id="fuel-tool" hidden novalidate>
+    <div class="conv-top">
+      <div class="input-group conv-amount">
+        <label for="fuel-amount">Amount</label>
+        <input id="fuel-amount" data-field="amount" type="text" inputmode="decimal" autocomplete="off" spellcheck="false" value="10" aria-describedby="fuel-error">
+      </div>
+      <div class="input-group">
+        <label for="fuel-from">From</label>
+        <select id="fuel-from" data-field="from"><option value="l100" selected>Litres per 100 km (L/100 km)</option><option value="mpgus">Miles per gallon, US (mpg)</option><option value="mpguk">Miles per gallon, UK (mpg)</option><option value="kml">Kilometres per litre (km/L)</option></select>
+      </div>
+      <div class="conv-swap">
+        <button type="button" class="btn btn-outlined" data-field="swap" aria-label="Swap units">Swap</button>
+      </div>
+      <div class="input-group">
+        <label for="fuel-to">To</label>
+        <select id="fuel-to" data-field="to"><option value="l100">Litres per 100 km (L/100 km)</option><option value="mpgus" selected>Miles per gallon, US (mpg)</option><option value="mpguk">Miles per gallon, UK (mpg)</option><option value="kml">Kilometres per litre (km/L)</option></select>
+      </div>
+    </div>
+    <p class="field-error" id="fuel-error" data-field="error" role="alert"></p>
+    
+    <div class="seg" role="group" aria-label="Decimal places">
+      <span class="seg-label">Decimals</span>
+      <button type="button" class="btn btn-outlined" data-digits="2" aria-pressed="true" aria-label="2 decimal places">2</button><button type="button" class="btn btn-outlined" data-digits="4" aria-pressed="false" aria-label="4 decimal places">4</button><button type="button" class="btn btn-outlined" data-digits="6" aria-pressed="false" aria-label="6 decimal places">6</button>
+    </div>
+    <div class="result-section show" aria-live="polite">
+      <h3>Result</h3>
+      <div class="result-item">
+        <span class="result-label">Converted</span>
+        <div class="result-line">
+          <span class="result-value result-hero" data-field="result">—</span>
+          <button type="button" class="btn btn-ghost" data-field="copy" disabled>Copy</button>
+        </div>
+      </div>
+      
+      <p class="caption tool-caption" data-field="caption"></p>
+    </div>
+  </form></div>
+    <div class="tool-panel conv-follow">
+    <h2>Common conversions</h2>
+    <p class="panel-note">Same factors as the converter. Figures below use those factors and may show more decimal places than the default view.</p>
+    <div class="table-wrap"><table class="conv-table"><thead><tr><th scope="col">Conversion</th><th scope="col">Equals</th></tr></thead><tbody><tr><td>100 km/h</td><td>62.14 mph</td></tr><tr><td>1 m/s</td><td>3.6 km/h</td></tr><tr><td>1 knot</td><td>1.852 km/h</td></tr><tr><td>10 L/100 km</td><td>23.52 mpg (US)</td></tr><tr><td>10 L/100 km</td><td>28.25 mpg (UK)</td></tr><tr><td>10 L/100 km</td><td>10 km/L</td></tr></tbody></table></div>
+  </div>
+    <div class="tool-panel conv-follow"><h2>FAQ</h2><div class="faq-list"><details><summary>How big is a knot?</summary><p>One knot is one nautical mile per hour, exactly 1.852 km/h. It is the usual unit for boats and aircraft.</p></details><details><summary>Why are there two miles-per-gallon figures?</summary><p>A US gallon and a UK gallon are different sizes. The US gallon is about 3.785 litres. The UK gallon is 4.54609 litres. The same car therefore has a higher mpg number in the UK unit.</p></details><details><summary>Why is 10 L/100 km about 23.52 mpg (US)?</summary><p>Miles per US gallon equals about 235.215 divided by the L/100 km figure. 235.215 / 10 is 23.52 at two decimal places. The line under the result shows more digits.</p></details><details><summary>Which direction means more efficient?</summary><p>A lower L/100 km number is more efficient. A higher mpg number, and a higher km/L number, are more efficient. The units run in opposite directions, which is why the same trip can look “better” or “worse” after a conversion.</p></details><details><summary>What is km/L?</summary><p>Kilometres per litre. It is 100 divided by the L/100 km figure, so 10 L/100 km is exactly 10 km/L.</p></details></div></div>
+  </div>
+  <section class="ad-section">
+      <div class="container">
+        <div class="ad-container">
+          <ins class="adsbygoogle"
+               style="display:block; width:100%; height:90px;"
+               data-ad-client="ca-pub-1234567890"
+               data-ad-slot="1234567890"
+               data-ad-format="auto"
+               data-full-width-responsive="true"></ins>
+        </div>
+      </div>
+    </section>
+  </main>
+  <footer class="site-footer">
+    <div class="container">
+      <a href="index.html" class="logo"><img class="logo-icon" src="img/unitpulse-icon.svg" alt="" width="28" height="28">UnitPulse</a>
+      <ul class="footer-links">
+        <li><a href="blog.html">Blog</a></li>
+        <li><a href="privacy.html">Privacy Policy</a></li>
+        <li><a href="terms.html">Terms of Service</a></li>
+        <li><a href="about.html">About Us</a></li>
+        <li><a href="contact.html">Contact</a></li>
+        <li><a href="dmca.html">DMCA</a></li>
+      </ul>
+      <p class="footer-sister"><a href="https://janvanhal.github.io/netpulse/">Also from us: NetPulse network tools</a></p>
+      <p class="footer-copy">&copy; 2026 UnitPulse. Free tools, privacy first.</p>
+    </div>
+  </footer>
+  <script>
+function parseNum(raw) {
+  let s = String(raw == null ? '' : raw).trim().replace(/[\s\u00a0\u202f]/g, '');
+  if (!s) return null;
+  const commas = s.split(',').length - 1;
+  const hasComma = commas > 0;
+  const hasDot = s.indexOf('.') !== -1;
+  if (hasComma && hasDot) {
+    if (s.lastIndexOf(',') > s.lastIndexOf('.')) s = s.replace(/\./g, '').replace(',', '.');
+    else s = s.replace(/,/g, '');
+  } else if (hasComma) {
+    if (commas > 1) return NaN;
+    s = s.replace(',', '.');
+  }
+  s = s.replace(/[.,]$/, '');
+  if (!/^[+-]?(?:\d+)(?:\.\d+)?$/.test(s)) return NaN;
+  const n = Number(s);
+  return Number.isFinite(n) ? n : NaN;
+}
+
+function formatNum(n, digits) {
+  if (!Number.isFinite(n)) return '—';
+  const d = digits | 0;
+  const abs = Math.abs(n);
+  if (n !== 0 && (abs >= 1e12 || abs < 10 ** (-d))) return n.toExponential(d);
+  const f = 10 ** d;
+  const rounded = Math.round((n + Number.EPSILON) * f) / f;
+  const neg = rounded < 0;
+  let s = Math.abs(rounded).toFixed(d);
+  if (s.indexOf('.') !== -1) s = s.replace(/0+$/, '').replace(/\.$/, '');
+  const bits = s.split('.');
+  bits[0] = bits[0].replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+  return (neg ? '-' : '') + (bits[1] ? bits[0] + '.' + bits[1] : bits[0]);
+}
+
+function plainNum(n, digits) {
+  return formatNum(n, digits).replace(/,/g, '');
+}
+
+function speedConvert(amount, from, to) {
+  const toKmh = { kmh: 1, mph: 1.609344, mps: 3.6, kn: 1.852 };
+  return amount * toKmh[from] / toKmh[to];
+}
+
+function fuelToL100(amount, unit) {
+  const mpgUs = (100 * 3.785411784) / 1.609344;
+  const mpgUk = (100 * 4.54609) / 1.609344;
+  if (unit === 'l100') return amount;
+  if (unit === 'kml') return 100 / amount;
+  if (unit === 'mpgus') return mpgUs / amount;
+  if (unit === 'mpguk') return mpgUk / amount;
+  return NaN;
+}
+
+function fuelFromL100(l100, unit) {
+  const mpgUs = (100 * 3.785411784) / 1.609344;
+  const mpgUk = (100 * 4.54609) / 1.609344;
+  if (unit === 'l100') return l100;
+  if (unit === 'kml') return 100 / l100;
+  if (unit === 'mpgus') return mpgUs / l100;
+  if (unit === 'mpguk') return mpgUk / l100;
+  return NaN;
+}
+
+function fuelConvert(amount, from, to) {
+  return fuelFromL100(fuelToL100(amount, from), to);
+}
+function loadState(key, fallback) {
+  try {
+    var raw = localStorage.getItem(key);
+    if (!raw) return fallback;
+    var data = JSON.parse(raw);
+    if (!data || typeof data !== 'object') return fallback;
+    return Object.assign({}, fallback, data);
+  } catch (e) {
+    return fallback;
+  }
+}
+
+function saveState(key, data) {
+  try { localStorage.setItem(key, JSON.stringify(data)); } catch (e) {}
+}
+
+function fallbackCopy(text, done, captionEl) {
+  var ta = document.createElement('textarea');
+  ta.value = text;
+  ta.setAttribute('readonly', '');
+  ta.style.position = 'fixed';
+  ta.style.left = '-9999px';
+  document.body.appendChild(ta);
+  ta.select();
+  var ok = false;
+  try { ok = document.execCommand('copy'); } catch (e) { ok = false; }
+  document.body.removeChild(ta);
+  if (ok) done();
+  else if (captionEl) captionEl.textContent = 'Copy failed. Select the result and copy it manually.';
+}
+
+function startUnitTool(cfg) {
+  var root = document.getElementById(cfg.root);
+  var q = function (name) { return root.querySelector('[data-field="' + name + '"]'); };
+  var amountEl = q('amount');
+  var fromEl = q('from');
+  var toEl = q('to');
+  var errEl = q('error');
+  var resultEl = q('result');
+  var captionEl = q('caption');
+  var copyBtn = q('copy');
+  var swapBtn = q('swap');
+  var state = loadState(cfg.key, cfg.defaults);
+  var digits = state.digits === 2 || state.digits === 4 || state.digits === 6 ? state.digits : cfg.defaults.digits;
+  var rawResult = null;
+
+  function unitById(id) {
+    for (var i = 0; i < cfg.units.length; i++) if (cfg.units[i].id === id) return cfg.units[i];
+    return null;
+  }
+  function unitShort(id) {
+    var u = unitById(id);
+    return u ? u.short : id;
+  }
+  function fillSelect(sel, value, fallback) {
+    sel.textContent = '';
+    cfg.units.forEach(function (u) {
+      var o = document.createElement('option');
+      o.value = u.id;
+      o.textContent = u.name;
+      o.dataset.short = u.short;
+      sel.appendChild(o);
+    });
+    sel.value = unitById(value) ? value : fallback;
+  }
+  fillSelect(fromEl, state.from || cfg.defaults.from, cfg.defaults.from);
+  fillSelect(toEl, state.to || cfg.defaults.to, cfg.defaults.to);
+  if (cfg.restore) cfg.restore(state);
+
+  function setDigits(d) {
+    digits = d;
+    root.querySelectorAll('[data-digits]').forEach(function (btn) {
+      btn.setAttribute('aria-pressed', Number(btn.getAttribute('data-digits')) === d ? 'true' : 'false');
+    });
+  }
+  setDigits(digits);
+
+  function persist() {
+    var data = { from: fromEl.value, to: toEl.value, digits: digits };
+    if (cfg.extendState) {
+      var extra = cfg.extendState();
+      if (extra) Object.keys(extra).forEach(function (k) { data[k] = extra[k]; });
+    }
+    saveState(cfg.key, data);
+  }
+
+  function clearResult(message, invalid) {
+    errEl.textContent = message || '';
+    if (invalid) amountEl.setAttribute('aria-invalid', 'true');
+    else amountEl.removeAttribute('aria-invalid');
+    resultEl.textContent = '—';
+    delete resultEl.dataset.raw;
+    rawResult = null;
+    copyBtn.disabled = true;
+    if (cfg.onClear) cfg.onClear();
+  }
+
+  function convert() {
+    var n = parseNum(amountEl.value);
+    if (n === null) {
+      clearResult('', false);
+      captionEl.textContent = 'Enter a number. A comma or a dot can mark the decimal.';
+      return;
+    }
+    if (Number.isNaN(n)) {
+      clearResult('Enter a number. A comma or a dot can mark the decimal.', true);
+      captionEl.textContent = '';
+      return;
+    }
+    var problem = cfg.validate ? cfg.validate(n, fromEl.value, toEl.value) : '';
+    if (problem) {
+      clearResult(problem, true);
+      captionEl.textContent = '';
+      return;
+    }
+    var out = cfg.convert(n, fromEl.value, toEl.value);
+    if (!Number.isFinite(out)) {
+      clearResult('That conversion is not available.', true);
+      captionEl.textContent = '';
+      return;
+    }
+    rawResult = plainNum(out, digits);
+    resultEl.dataset.raw = rawResult;
+    resultEl.textContent = formatNum(out, digits) + '\u00a0' + unitShort(toEl.value);
+    var ctx = { amount: n, from: fromEl.value, to: toEl.value, out: out, digits: digits };
+    if (cfg.caption) cfg.caption(captionEl, ctx);
+    else if (ctx.from === ctx.to) captionEl.textContent = 'Same unit, so the value does not change. Shown to ' + digits + ' decimal places.';
+    else captionEl.textContent = 'Exact value ' + formatNum(out, 8) + ' ' + unitShort(toEl.value) + ', shown to ' + digits + ' decimal places.';
+    copyBtn.disabled = false;
+    if (cfg.after) cfg.after(ctx);
+    persist();
+  }
+
+  amountEl.addEventListener('input', convert);
+  fromEl.addEventListener('change', convert);
+  toEl.addEventListener('change', convert);
+  swapBtn.addEventListener('click', function () {
+    var a = fromEl.value;
+    fromEl.value = toEl.value;
+    toEl.value = a;
+    convert();
+  });
+  root.querySelectorAll('[data-digits]').forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      setDigits(Number(btn.getAttribute('data-digits')));
+      convert();
+    });
+  });
+  root.addEventListener('submit', function (e) {
+    e.preventDefault();
+    convert();
+  });
+  copyBtn.addEventListener('click', function () {
+    if (rawResult == null) return;
+    var done = function () {
+      copyBtn.textContent = 'Copied';
+      window.setTimeout(function () { copyBtn.textContent = 'Copy'; }, 1500);
+    };
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(rawResult).then(done).catch(function () { fallbackCopy(rawResult, done, captionEl); });
+    } else fallbackCopy(rawResult, done, captionEl);
+  });
+  convert();
+  return {
+    convert: convert,
+    fromEl: fromEl,
+    toEl: toEl,
+    amountEl: amountEl,
+    getDigits: function () { return digits; }
+  };
+}
+
+var SPEED_UNITS = [{"id":"kmh","name":"Kilometres per hour (km/h)","short":"km/h"},{"id":"mph","name":"Miles per hour (mph)","short":"mph"},{"id":"mps","name":"Metres per second (m/s)","short":"m/s"},{"id":"kn","name":"Knots (kn)","short":"kn"}];
+var FUEL_UNITS = [{"id":"l100","name":"Litres per 100 km (L/100 km)","short":"L/100 km"},{"id":"mpgus","name":"Miles per gallon, US (mpg)","short":"mpg US"},{"id":"mpguk","name":"Miles per gallon, UK (mpg)","short":"mpg UK"},{"id":"kml","name":"Kilometres per litre (km/L)","short":"km/L"}];
+
+startUnitTool({
+  root: "speed-tool",
+  key: "unitpulse:speed",
+  units: SPEED_UNITS,
+  defaults: { from: "kmh", to: "mph", digits: 2 },
+  convert: function (amount, from, to) { return speedConvert(amount, from, to); },
+  validate: function (n) { return n < 0 ? "Enter zero or a positive number." : ""; }
+});
+startUnitTool({
+  root: "fuel-tool",
+  key: "unitpulse:fuel",
+  units: FUEL_UNITS,
+  defaults: { from: "l100", to: "mpgus", digits: 2 },
+  convert: function (amount, from, to) { return fuelConvert(amount, from, to); },
+  validate: function (n) { return !(n > 0) ? "Enter a number greater than zero." : ""; }
+});
+function applyMode(mode) {
+  var fuel = mode === "fuel";
+  document.getElementById("speed-tool").hidden = fuel;
+  document.getElementById("fuel-tool").hidden = !fuel;
+  document.getElementById("modeSpeed").setAttribute("aria-pressed", fuel ? "false" : "true");
+  document.getElementById("modeFuel").setAttribute("aria-pressed", fuel ? "true" : "false");
+  saveState("unitpulse:travel-mode", { mode: fuel ? "fuel" : "speed" });
+}
+var savedMode = loadState("unitpulse:travel-mode", { mode: "speed" });
+applyMode(savedMode.mode === "fuel" ? "fuel" : "speed");
+document.getElementById("modeSpeed").addEventListener("click", function () { applyMode("speed"); });
+document.getElementById("modeFuel").addEventListener("click", function () { applyMode("fuel"); });
+
+</script>
+</body>
+</html>

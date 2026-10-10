@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#f6f5f4">
+  <title>Area Converter - UnitPulse</title>
+  <link rel="icon" type="image/svg+xml" href="img/unitpulse-icon.svg">
+  <meta name="description" content="Convert square metres, hectares, acres and Thai land units: rai, ngan and square wa, including a combined rai-ngan-wa figure.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Source+Serif+4:opsz,wght@8..60,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css?v=1">
+</head>
+<body>
+  <header class="site-header">
+    <div class="container">
+      <nav class="site-nav" aria-label="Primary">
+        <a href="index.html" class="logo"><img class="logo-icon" src="img/unitpulse-icon.svg" alt="" width="28" height="28">UnitPulse</a>
+        <button class="nav-toggle" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="primary-menu" onclick="var h=this.closest('.site-header'),o=h.classList.toggle('nav-open');this.setAttribute('aria-expanded',o);this.setAttribute('aria-label',o?'Close menu':'Open menu')"><span class="nav-toggle-bars" aria-hidden="true"><span></span><span></span><span></span></span>Menu</button>
+        <ul class="nav-links" id="primary-menu">
+          <li><a href="index.html">Home</a></li><li><a href="currency.html">Currency</a></li><li><a href="length.html">Length</a></li><li><a href="weight.html">Weight</a></li><li><a href="temperature.html">Temperature</a></li>
+          <li class="nav-more"><details class="nav-details is-current"><summary>More</summary><ul id="more-menu"><li><a href="volume.html">Volume</a></li><li><a href="area.html" class="active" aria-current="page">Area</a></li><li><a href="speed-fuel.html">Speed & Fuel</a></li><li><a href="timezone.html">Time Zone</a></li></ul></details></li>
+          <li><a href="blog.html">Blog</a></li><li><a href="about.html">About</a></li><li><a href="contact.html">Contact</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+  <main class="page-wrap"><div class="container">
+    <div class="tool-panel"><div class="tool-header"><h1>Area Converter</h1><p>Land area, including Thai rai, ngan and square wa. One rai is exactly 1,600 square metres.</p></div>
+    <noscript><p class="panel-note">Turn on JavaScript to convert. Numbers stay in this browser.</p></noscript>
+    <form id="area-tool" novalidate>
+    <div class="conv-top">
+      <div class="input-group conv-amount">
+        <label for="area-amount">Amount</label>
+        <input id="area-amount" data-field="amount" type="text" inputmode="decimal" autocomplete="off" spellcheck="false" value="1" aria-describedby="area-error">
+      </div>
+      <div class="input-group">
+        <label for="area-from">From</label>
+        <select id="area-from" data-field="from"><option value="m2">Square metres (m²)</option><option value="km2">Square kilometres (km²)</option><option value="ha">Hectares (ha)</option><option value="ft2">Square feet (ft²)</option><option value="acre">Acres (ac)</option><option value="rai" selected>Rai</option><option value="ngan">Ngan</option><option value="wa2">Square wa</option></select>
+      </div>
+      <div class="conv-swap">
+        <button type="button" class="btn btn-outlined" data-field="swap" aria-label="Swap units">Swap</button>
+      </div>
+      <div class="input-group">
+        <label for="area-to">To</label>
+        <select id="area-to" data-field="to"><option value="m2" selected>Square metres (m²)</option><option value="km2">Square kilometres (km²)</option><option value="ha">Hectares (ha)</option><option value="ft2">Square feet (ft²)</option><option value="acre">Acres (ac)</option><option value="rai">Rai</option><option value="ngan">Ngan</option><option value="wa2">Square wa</option></select>
+      </div>
+    </div>
+    <p class="field-error" id="area-error" data-field="error" role="alert"></p>
+    
+    <div class="seg" role="group" aria-label="Decimal places">
+      <span class="seg-label">Decimals</span>
+      <button type="button" class="btn btn-outlined" data-digits="2" aria-pressed="true" aria-label="2 decimal places">2</button><button type="button" class="btn btn-outlined" data-digits="4" aria-pressed="false" aria-label="4 decimal places">4</button><button type="button" class="btn btn-outlined" data-digits="6" aria-pressed="false" aria-label="6 decimal places">6</button>
+    </div>
+    <div class="result-section show" aria-live="polite">
+      <h3>Result</h3>
+      <div class="result-item">
+        <span class="result-label">Converted</span>
+        <div class="result-line">
+          <span class="result-value result-hero" data-field="result">—</span>
+          <button type="button" class="btn btn-ghost" data-field="copy" disabled>Copy</button>
+        </div>
+      </div>
+      <div class="result-item"><span class="result-label">Thai land measure</span><span class="result-value" id="thaiBreak">—</span></div>
+      <p class="caption tool-caption" data-field="caption"></p>
+    </div>
+  </form><div class="compound"><h2>Rai, ngan and square wa</h2>
+          <p class="panel-note">Type a combined figure such as 2 rai, 1 ngan and 50 square wa. The parts are added, not multiplied.</p>
+          <div class="triple-grid"><div class="input-group"><label for="raiIn">Rai</label><input id="raiIn" type="text" inputmode="decimal" autocomplete="off" spellcheck="false" value="2"></div><div class="input-group"><label for="nganIn">Ngan</label><input id="nganIn" type="text" inputmode="decimal" autocomplete="off" spellcheck="false" value="1"></div><div class="input-group"><label for="waIn">Square wa</label><input id="waIn" type="text" inputmode="decimal" autocomplete="off" spellcheck="false" value="50"></div></div>
+          <p class="field-error" id="thaiError" role="alert"></p>
+          <p class="sub-result" id="thaiOut">—</p>
+        </div></div>
+    <div class="tool-panel conv-follow">
+    <h2>Common conversions</h2>
+    <p class="panel-note">Same factors as the converter. Figures below use those factors and may show more decimal places than the default view.</p>
+    <div class="table-wrap"><table class="conv-table"><thead><tr><th scope="col">Conversion</th><th scope="col">Equals</th></tr></thead><tbody><tr><td>1 rai</td><td>1,600 m²</td></tr><tr><td>1 ngan</td><td>400 m²</td></tr><tr><td>1 square wa</td><td>4 m²</td></tr><tr><td>1 rai</td><td>4 ngan · 400 square wa</td></tr><tr><td>1 hectare</td><td>6.25 rai</td></tr><tr><td>1 acre</td><td>4,046.86 m²</td></tr><tr><td>2 rai 1 ngan 50 square wa</td><td>3,800 m²</td></tr></tbody></table></div>
+  </div>
+    <div class="tool-panel conv-follow"><h2>FAQ</h2><div class="faq-list"><details><summary>How big is a rai?</summary><p>One rai is exactly 1,600 square metres. It is 4 ngan, or 400 square wa.</p></details><details><summary>What is a square wa?</summary><p>A linear wa is 2 metres, so a square wa is 4 square metres. In a land quote, “wa” almost always means square wa.</p></details><details><summary>How do I read “2 rai 1 ngan 50 wa”?</summary><p>Add the parts: 2 × 1,600 plus 1 × 400 plus 50 × 4 = 3,800 square metres. Use the three boxes under the main converter for that sum.</p></details><details><summary>How do rai compare with acres and hectares?</summary><p>A hectare is 10,000 square metres, which is 6.25 rai. An international acre is about 4,047 square metres, or about 2.53 rai. These figures explain a listing. They are not a boundary survey.</p></details></div></div>
+  </div>
+  <section class="ad-section">
+      <div class="container">
+        <div class="ad-container">
+          <ins class="adsbygoogle"
+               style="display:block; width:100%; height:90px;"
+               data-ad-client="ca-pub-1234567890"
+               data-ad-slot="1234567890"
+               data-ad-format="auto"
+               data-full-width-responsive="true"></ins>
+        </div>
+      </div>
+    </section>
+  </main>
+  <footer class="site-footer">
+    <div class="container">
+      <a href="index.html" class="logo"><img class="logo-icon" src="img/unitpulse-icon.svg" alt="" width="28" height="28">UnitPulse</a>
+      <ul class="footer-links">
+        <li><a href="blog.html">Blog</a></li>
+        <li><a href="privacy.html">Privacy Policy</a></li>
+        <li><a href="terms.html">Terms of Service</a></li>
+        <li><a href="about.html">About Us</a></li>
+        <li><a href="contact.html">Contact</a></li>
+        <li><a href="dmca.html">DMCA</a></li>
+      </ul>
+      <p class="footer-sister"><a href="https://janvanhal.github.io/netpulse/">Also from us: NetPulse network tools</a></p>
+      <p class="footer-copy">&copy; 2026 UnitPulse. Free tools, privacy first.</p>
+    </div>
+  </footer>
+  <script>
+function parseNum(raw) {
+  let s = String(raw == null ? '' : raw).trim().replace(/[\s\u00a0\u202f]/g, '');
+  if (!s) return null;
+  const commas = s.split(',').length - 1;
+  const hasComma = commas > 0;
+  const hasDot = s.indexOf('.') !== -1;
+  if (hasComma && hasDot) {
+    if (s.lastIndexOf(',') > s.lastIndexOf('.')) s = s.replace(/\./g, '').replace(',', '.');
+    else s = s.replace(/,/g, '');
+  } else if (hasComma) {
+    if (commas > 1) return NaN;
+    s = s.replace(',', '.');
+  }
+  s = s.replace(/[.,]$/, '');
+  if (!/^[+-]?(?:\d+)(?:\.\d+)?$/.test(s)) return NaN;
+  const n = Number(s);
+  return Number.isFinite(n) ? n : NaN;
+}
+
+function formatNum(n, digits) {
+  if (!Number.isFinite(n)) return '—';
+  const d = digits | 0;
+  const abs = Math.abs(n);
+  if (n !== 0 && (abs >= 1e12 || abs < 10 ** (-d))) return n.toExponential(d);
+  const f = 10 ** d;
+  const rounded = Math.round((n + Number.EPSILON) * f) / f;
+  const neg = rounded < 0;
+  let s = Math.abs(rounded).toFixed(d);
+  if (s.indexOf('.') !== -1) s = s.replace(/0+$/, '').replace(/\.$/, '');
+  const bits = s.split('.');
+  bits[0] = bits[0].replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+  return (neg ? '-' : '') + (bits[1] ? bits[0] + '.' + bits[1] : bits[0]);
+}
+
+function plainNum(n, digits) {
+  return formatNum(n, digits).replace(/,/g, '');
+}
+
+function areaToM2(id) {
+  const t = { m2: 1, km2: 1e6, ha: 10000, ft2: 0.09290304, acre: 4046.8564224, rai: 1600, ngan: 400, wa2: 4 };
+  return t[id];
+}
+
+function areaConvert(amount, from, to) {
+  return amount * areaToM2(from) / areaToM2(to);
+}
+
+function thaiToM2(rai, ngan, wa) {
+  return rai * 1600 + ngan * 400 + wa * 4;
+}
+
+function thaiFromM2(m2) {
+  const waTotal = m2 / 4;
+  let rai = Math.floor(waTotal / 400 + 1e-9);
+  let rem = waTotal - rai * 400;
+  if (rem < 0) rem = 0;
+  let ngan = Math.floor(rem / 100 + 1e-9);
+  let wa = rem - ngan * 100;
+  if (wa < 0) wa = 0;
+  return { rai: rai, ngan: ngan, wa: wa };
+}
+function loadState(key, fallback) {
+  try {
+    var raw = localStorage.getItem(key);
+    if (!raw) return fallback;
+    var data = JSON.parse(raw);
+    if (!data || typeof data !== 'object') return fallback;
+    return Object.assign({}, fallback, data);
+  } catch (e) {
+    return fallback;
+  }
+}
+
+function saveState(key, data) {
+  try { localStorage.setItem(key, JSON.stringify(data)); } catch (e) {}
+}
+
+function fallbackCopy(text, done, captionEl) {
+  var ta = document.createElement('textarea');
+  ta.value = text;
+  ta.setAttribute('readonly', '');
+  ta.style.position = 'fixed';
+  ta.style.left = '-9999px';
+  document.body.appendChild(ta);
+  ta.select();
+  var ok = false;
+  try { ok = document.execCommand('copy'); } catch (e) { ok = false; }
+  document.body.removeChild(ta);
+  if (ok) done();
+  else if (captionEl) captionEl.textContent = 'Copy failed. Select the result and copy it manually.';
+}
+
+function startUnitTool(cfg) {
+  var root = document.getElementById(cfg.root);
+  var q = function (name) { return root.querySelector('[data-field="' + name + '"]'); };
+  var amountEl = q('amount');
+  var fromEl = q('from');
+  var toEl = q('to');
+  var errEl = q('error');
+  var resultEl = q('result');
+  var captionEl = q('caption');
+  var copyBtn = q('copy');
+  var swapBtn = q('swap');
+  var state = loadState(cfg.key, cfg.defaults);
+  var digits = state.digits === 2 || state.digits === 4 || state.digits === 6 ? state.digits : cfg.defaults.digits;
+  var rawResult = null;
+
+  function unitById(id) {
+    for (var i = 0; i < cfg.units.length; i++) if (cfg.units[i].id === id) return cfg.units[i];
+    return null;
+  }
+  function unitShort(id) {
+    var u = unitById(id);
+    return u ? u.short : id;
+  }
+  function fillSelect(sel, value, fallback) {
+    sel.textContent = '';
+    cfg.units.forEach(function (u) {
+      var o = document.createElement('option');
+      o.value = u.id;
+      o.textContent = u.name;
+      o.dataset.short = u.short;
+      sel.appendChild(o);
+    });
+    sel.value = unitById(value) ? value : fallback;
+  }
+  fillSelect(fromEl, state.from || cfg.defaults.from, cfg.defaults.from);
+  fillSelect(toEl, state.to || cfg.defaults.to, cfg.defaults.to);
+  if (cfg.restore) cfg.restore(state);
+
+  function setDigits(d) {
+    digits = d;
+    root.querySelectorAll('[data-digits]').forEach(function (btn) {
+      btn.setAttribute('aria-pressed', Number(btn.getAttribute('data-digits')) === d ? 'true' : 'false');
+    });
+  }
+  setDigits(digits);
+
+  function persist() {
+    var data = { from: fromEl.value, to: toEl.value, digits: digits };
+    if (cfg.extendState) {
+      var extra = cfg.extendState();
+      if (extra) Object.keys(extra).forEach(function (k) { data[k] = extra[k]; });
+    }
+    saveState(cfg.key, data);
+  }
+
+  function clearResult(message, invalid) {
+    errEl.textContent = message || '';
+    if (invalid) amountEl.setAttribute('aria-invalid', 'true');
+    else amountEl.removeAttribute('aria-invalid');
+    resultEl.textContent = '—';
+    delete resultEl.dataset.raw;
+    rawResult = null;
+    copyBtn.disabled = true;
+    if (cfg.onClear) cfg.onClear();
+  }
+
+  function convert() {
+    var n = parseNum(amountEl.value);
+    if (n === null) {
+      clearResult('', false);
+      captionEl.textContent = 'Enter a number. A comma or a dot can mark the decimal.';
+      return;
+    }
+    if (Number.isNaN(n)) {
+      clearResult('Enter a number. A comma or a dot can mark the decimal.', true);
+      captionEl.textContent = '';
+      return;
+    }
+    var problem = cfg.validate ? cfg.validate(n, fromEl.value, toEl.value) : '';
+    if (problem) {
+      clearResult(problem, true);
+      captionEl.textContent = '';
+      return;
+    }
+    var out = cfg.convert(n, fromEl.value, toEl.value);
+    if (!Number.isFinite(out)) {
+      clearResult('That conversion is not available.', true);
+      captionEl.textContent = '';
+      return;
+    }
+    rawResult = plainNum(out, digits);
+    resultEl.dataset.raw = rawResult;
+    resultEl.textContent = formatNum(out, digits) + '\u00a0' + unitShort(toEl.value);
+    var ctx = { amount: n, from: fromEl.value, to: toEl.value, out: out, digits: digits };
+    if (cfg.caption) cfg.caption(captionEl, ctx);
+    else if (ctx.from === ctx.to) captionEl.textContent = 'Same unit, so the value does not change. Shown to ' + digits + ' decimal places.';
+    else captionEl.textContent = 'Exact value ' + formatNum(out, 8) + ' ' + unitShort(toEl.value) + ', shown to ' + digits + ' decimal places.';
+    copyBtn.disabled = false;
+    if (cfg.after) cfg.after(ctx);
+    persist();
+  }
+
+  amountEl.addEventListener('input', convert);
+  fromEl.addEventListener('change', convert);
+  toEl.addEventListener('change', convert);
+  swapBtn.addEventListener('click', function () {
+    var a = fromEl.value;
+    fromEl.value = toEl.value;
+    toEl.value = a;
+    convert();
+  });
+  root.querySelectorAll('[data-digits]').forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      setDigits(Number(btn.getAttribute('data-digits')));
+      convert();
+    });
+  });
+  root.addEventListener('submit', function (e) {
+    e.preventDefault();
+    convert();
+  });
+  copyBtn.addEventListener('click', function () {
+    if (rawResult == null) return;
+    var done = function () {
+      copyBtn.textContent = 'Copied';
+      window.setTimeout(function () { copyBtn.textContent = 'Copy'; }, 1500);
+    };
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(rawResult).then(done).catch(function () { fallbackCopy(rawResult, done, captionEl); });
+    } else fallbackCopy(rawResult, done, captionEl);
+  });
+  convert();
+  return {
+    convert: convert,
+    fromEl: fromEl,
+    toEl: toEl,
+    amountEl: amountEl,
+    getDigits: function () { return digits; }
+  };
+}
+
+var UNITS = [{"id":"m2","name":"Square metres (m²)","short":"m²"},{"id":"km2","name":"Square kilometres (km²)","short":"km²"},{"id":"ha","name":"Hectares (ha)","short":"ha"},{"id":"ft2","name":"Square feet (ft²)","short":"ft²"},{"id":"acre","name":"Acres (ac)","short":"ac"},{"id":"rai","name":"Rai","short":"rai"},{"id":"ngan","name":"Ngan","short":"ngan"},{"id":"wa2","name":"Square wa","short":"wa²"}];
+
+var api = startUnitTool({
+  root: "area-tool",
+  key: "unitpulse:area",
+  units: UNITS,
+  defaults: { from: "rai", to: "m2", digits: 2 },
+  convert: function (amount, from, to) { return areaConvert(amount, from, to); },
+  validate: function (n) { return n < 0 ? "Enter zero or a positive number." : ""; },
+  after: function (ctx) {
+    var t = thaiFromM2(ctx.amount * areaToM2(ctx.from));
+    document.getElementById("thaiBreak").textContent = formatNum(t.rai, 0) + " rai, " + formatNum(t.ngan, 0) + " ngan, " + formatNum(t.wa, ctx.digits) + " square wa";
+  },
+  onClear: function () { document.getElementById("thaiBreak").textContent = "—"; }
+});
+var raiIn = document.getElementById("raiIn");
+var nganIn = document.getElementById("nganIn");
+var waIn = document.getElementById("waIn");
+var thaiOut = document.getElementById("thaiOut");
+var thaiErr = document.getElementById("thaiError");
+function bad(n) { return n !== null && (Number.isNaN(n) || n < 0); }
+function fromThai() {
+  thaiErr.textContent = "";
+  var rai = parseNum(raiIn.value);
+  var ngan = parseNum(nganIn.value);
+  var wa = parseNum(waIn.value);
+  if (rai === null && ngan === null && wa === null) { thaiOut.textContent = "—"; return; }
+  if (bad(rai) || bad(ngan) || bad(wa)) { thaiErr.textContent = "Enter zero or a positive number."; thaiOut.textContent = "—"; return; }
+  var m2 = thaiToM2(rai || 0, ngan || 0, wa || 0);
+  var opt = api.toEl.options[api.toEl.selectedIndex];
+  var shortName = opt && opt.dataset.short ? opt.dataset.short : "";
+  var toVal = areaConvert(m2, "m2", api.toEl.value);
+  thaiOut.textContent = formatNum(m2, api.getDigits()) + " m² · " + formatNum(toVal, api.getDigits()) + " " + shortName;
+}
+[raiIn, nganIn, waIn].forEach(function (el) { el.addEventListener("input", fromThai); });
+api.toEl.addEventListener("change", fromThai);
+document.getElementById("area-tool").querySelectorAll("[data-digits]").forEach(function (btn) {
+  btn.addEventListener("click", fromThai);
+});
+fromThai();
+
+</script>
+</body>
+</html>

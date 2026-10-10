@@ -1,0 +1,547 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#f6f5f4">
+  <title>Time Zone Converter - UnitPulse</title>
+  <link rel="icon" type="image/svg+xml" href="img/unitpulse-icon.svg">
+  <meta name="description" content="See one date and time in Bangkok, Brussels, Amsterdam, London, New York, Tokyo and other cities. Daylight saving follows your browser.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Source+Serif+4:opsz,wght@8..60,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css?v=1">
+</head>
+<body>
+  <header class="site-header">
+    <div class="container">
+      <nav class="site-nav" aria-label="Primary">
+        <a href="index.html" class="logo"><img class="logo-icon" src="img/unitpulse-icon.svg" alt="" width="28" height="28">UnitPulse</a>
+        <button class="nav-toggle" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="primary-menu" onclick="var h=this.closest('.site-header'),o=h.classList.toggle('nav-open');this.setAttribute('aria-expanded',o);this.setAttribute('aria-label',o?'Close menu':'Open menu')"><span class="nav-toggle-bars" aria-hidden="true"><span></span><span></span><span></span></span>Menu</button>
+        <ul class="nav-links" id="primary-menu">
+          <li><a href="index.html">Home</a></li><li><a href="currency.html">Currency</a></li><li><a href="length.html">Length</a></li><li><a href="weight.html">Weight</a></li><li><a href="temperature.html">Temperature</a></li>
+          <li class="nav-more"><details class="nav-details is-current"><summary>More</summary><ul id="more-menu"><li><a href="volume.html">Volume</a></li><li><a href="area.html">Area</a></li><li><a href="speed-fuel.html">Speed & Fuel</a></li><li><a href="timezone.html" class="active" aria-current="page">Time Zone</a></li></ul></details></li>
+          <li><a href="blog.html">Blog</a></li><li><a href="about.html">About</a></li><li><a href="contact.html">Contact</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+  <main class="page-wrap"><div class="container">
+    <div class="tool-panel"><div class="tool-header"><h1>Time Zone Converter</h1><p>Type a clock time in one city and see that moment everywhere else on your list.</p></div>
+    <noscript><p class="panel-note">Turn on JavaScript to convert. Numbers stay in this browser.</p></noscript>
+    <form id="tz-form" novalidate>
+          <div class="input-group"><label for="when">Date and time</label>
+            <input id="when" type="datetime-local" step="60" aria-describedby="tzError"></div>
+          <div class="input-group"><label for="sourceCity">This clock time is in</label>
+            <select id="sourceCity"></select></div>
+          <div class="conv-actions">
+            <button type="button" class="btn btn-outlined" id="swapCity">Swap city</button>
+            <button type="button" class="btn btn-ghost" id="copyTimes">Copy</button>
+          </div>
+          <p class="field-error" id="tzError" role="alert"></p>
+          <div class="result-section show" aria-live="polite">
+            <h3>Times</h3>
+            <div id="cityRows"></div>
+            <p class="caption tool-caption" id="tzCaption"></p>
+          </div>
+        </form>
+        <div class="compound"><h2>Cities</h2>
+          <p class="panel-note">Add or remove cities. The list is saved in this browser.</p>
+          <div class="add-row">
+            <div class="input-group"><label for="addCity">Add a city</label><select id="addCity"></select></div>
+            <button type="button" class="btn btn-primary" id="addBtn">Add</button>
+          </div>
+        </div></div>
+    <div class="tool-panel conv-follow">
+    <h2>Common conversions</h2>
+    <p class="panel-note">Defaults are Bangkok, Brussels, Amsterdam, London, New York and Tokyo.</p>
+    <div class="table-wrap"><table class="conv-table"><thead><tr><th scope="col">Conversion</th><th scope="col">Equals</th></tr></thead><tbody><tr><td>Bangkok noon in October</td><td>London 06:00 during British Summer Time</td></tr><tr><td>Brussels and Amsterdam</td><td>The same clock, both on Central European Time</td></tr><tr><td>New York in July</td><td>Four hours behind London</td></tr><tr><td>Tokyo</td><td>Two hours ahead of Bangkok, year round</td></tr></tbody></table></div>
+  </div>
+    <div class="tool-panel conv-follow"><h2>FAQ</h2><div class="faq-list"><details><summary>Does this handle daylight saving?</summary><p>Yes. The conversion uses your browser’s time-zone data through Intl.DateTimeFormat, so London, New York and Brussels move when those regions change the clocks. Bangkok and Tokyo do not use daylight saving.</p></details><details><summary>Is the clock time in my laptop’s time zone?</summary><p>No. The date and time you type are read in the city marked as the source, even if you are sitting somewhere else. “Use as source” on another row re-reads that same clock time in the new city.</p></details><details><summary>Are my cities saved?</summary><p>Yes, in this browser only, along with which city is the source. The date you type is not stored. Clearing site data removes the list and the page returns to the six default cities.</p></details><details><summary>What happens in the missing hour when clocks spring forward?</summary><p>Once a year some cities skip an hour, and in autumn one hour happens twice. If you type a clock time that does not exist, the page says so and the other cities follow the moment your browser returns. The overlapping hour follows one of the two possible offsets.</p></details></div></div>
+  </div>
+  <section class="ad-section">
+      <div class="container">
+        <div class="ad-container">
+          <ins class="adsbygoogle"
+               style="display:block; width:100%; height:90px;"
+               data-ad-client="ca-pub-1234567890"
+               data-ad-slot="1234567890"
+               data-ad-format="auto"
+               data-full-width-responsive="true"></ins>
+        </div>
+      </div>
+    </section>
+  </main>
+  <footer class="site-footer">
+    <div class="container">
+      <a href="index.html" class="logo"><img class="logo-icon" src="img/unitpulse-icon.svg" alt="" width="28" height="28">UnitPulse</a>
+      <ul class="footer-links">
+        <li><a href="blog.html">Blog</a></li>
+        <li><a href="privacy.html">Privacy Policy</a></li>
+        <li><a href="terms.html">Terms of Service</a></li>
+        <li><a href="about.html">About Us</a></li>
+        <li><a href="contact.html">Contact</a></li>
+        <li><a href="dmca.html">DMCA</a></li>
+      </ul>
+      <p class="footer-sister"><a href="https://janvanhal.github.io/netpulse/">Also from us: NetPulse network tools</a></p>
+      <p class="footer-copy">&copy; 2026 UnitPulse. Free tools, privacy first.</p>
+    </div>
+  </footer>
+  <script>
+function parseNum(raw) {
+  let s = String(raw == null ? '' : raw).trim().replace(/[\s\u00a0\u202f]/g, '');
+  if (!s) return null;
+  const commas = s.split(',').length - 1;
+  const hasComma = commas > 0;
+  const hasDot = s.indexOf('.') !== -1;
+  if (hasComma && hasDot) {
+    if (s.lastIndexOf(',') > s.lastIndexOf('.')) s = s.replace(/\./g, '').replace(',', '.');
+    else s = s.replace(/,/g, '');
+  } else if (hasComma) {
+    if (commas > 1) return NaN;
+    s = s.replace(',', '.');
+  }
+  s = s.replace(/[.,]$/, '');
+  if (!/^[+-]?(?:\d+)(?:\.\d+)?$/.test(s)) return NaN;
+  const n = Number(s);
+  return Number.isFinite(n) ? n : NaN;
+}
+
+function formatNum(n, digits) {
+  if (!Number.isFinite(n)) return '—';
+  const d = digits | 0;
+  const abs = Math.abs(n);
+  if (n !== 0 && (abs >= 1e12 || abs < 10 ** (-d))) return n.toExponential(d);
+  const f = 10 ** d;
+  const rounded = Math.round((n + Number.EPSILON) * f) / f;
+  const neg = rounded < 0;
+  let s = Math.abs(rounded).toFixed(d);
+  if (s.indexOf('.') !== -1) s = s.replace(/0+$/, '').replace(/\.$/, '');
+  const bits = s.split('.');
+  bits[0] = bits[0].replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+  return (neg ? '-' : '') + (bits[1] ? bits[0] + '.' + bits[1] : bits[0]);
+}
+
+function plainNum(n, digits) {
+  return formatNum(n, digits).replace(/,/g, '');
+}
+
+function zoneOffsetMs(utcMs, timeZone) {
+  const dtf = new Intl.DateTimeFormat('en-US', {
+    timeZone: timeZone,
+    hourCycle: 'h23',
+    year: 'numeric',
+    month: '2-digit',
+    day: '2-digit',
+    hour: '2-digit',
+    minute: '2-digit',
+    second: '2-digit'
+  });
+  const map = {};
+  const parts = dtf.formatToParts(new Date(utcMs));
+  for (let i = 0; i < parts.length; i++) {
+    if (parts[i].type !== 'literal') map[parts[i].type] = parts[i].value;
+  }
+  const hour = map.hour === '24' ? 0 : Number(map.hour);
+  const asUTC = Date.UTC(Number(map.year), Number(map.month) - 1, Number(map.day), hour, Number(map.minute), Number(map.second));
+  return asUTC - utcMs;
+}
+
+function zonedTimeToUtc(year, month, day, hour, minute, timeZone) {
+  const guess = Date.UTC(year, month - 1, day, hour, minute, 0);
+  const offset = zoneOffsetMs(guess, timeZone);
+  let utc = guess - offset;
+  const offset2 = zoneOffsetMs(utc, timeZone);
+  if (offset2 !== offset) utc = guess - offset2;
+  return utc;
+}
+function loadState(key, fallback) {
+  try {
+    var raw = localStorage.getItem(key);
+    if (!raw) return fallback;
+    var data = JSON.parse(raw);
+    if (!data || typeof data !== 'object') return fallback;
+    return Object.assign({}, fallback, data);
+  } catch (e) {
+    return fallback;
+  }
+}
+
+function saveState(key, data) {
+  try { localStorage.setItem(key, JSON.stringify(data)); } catch (e) {}
+}
+
+function fallbackCopy(text, done, captionEl) {
+  var ta = document.createElement('textarea');
+  ta.value = text;
+  ta.setAttribute('readonly', '');
+  ta.style.position = 'fixed';
+  ta.style.left = '-9999px';
+  document.body.appendChild(ta);
+  ta.select();
+  var ok = false;
+  try { ok = document.execCommand('copy'); } catch (e) { ok = false; }
+  document.body.removeChild(ta);
+  if (ok) done();
+  else if (captionEl) captionEl.textContent = 'Copy failed. Select the result and copy it manually.';
+}
+
+function startUnitTool(cfg) {
+  var root = document.getElementById(cfg.root);
+  var q = function (name) { return root.querySelector('[data-field="' + name + '"]'); };
+  var amountEl = q('amount');
+  var fromEl = q('from');
+  var toEl = q('to');
+  var errEl = q('error');
+  var resultEl = q('result');
+  var captionEl = q('caption');
+  var copyBtn = q('copy');
+  var swapBtn = q('swap');
+  var state = loadState(cfg.key, cfg.defaults);
+  var digits = state.digits === 2 || state.digits === 4 || state.digits === 6 ? state.digits : cfg.defaults.digits;
+  var rawResult = null;
+
+  function unitById(id) {
+    for (var i = 0; i < cfg.units.length; i++) if (cfg.units[i].id === id) return cfg.units[i];
+    return null;
+  }
+  function unitShort(id) {
+    var u = unitById(id);
+    return u ? u.short : id;
+  }
+  function fillSelect(sel, value, fallback) {
+    sel.textContent = '';
+    cfg.units.forEach(function (u) {
+      var o = document.createElement('option');
+      o.value = u.id;
+      o.textContent = u.name;
+      o.dataset.short = u.short;
+      sel.appendChild(o);
+    });
+    sel.value = unitById(value) ? value : fallback;
+  }
+  fillSelect(fromEl, state.from || cfg.defaults.from, cfg.defaults.from);
+  fillSelect(toEl, state.to || cfg.defaults.to, cfg.defaults.to);
+  if (cfg.restore) cfg.restore(state);
+
+  function setDigits(d) {
+    digits = d;
+    root.querySelectorAll('[data-digits]').forEach(function (btn) {
+      btn.setAttribute('aria-pressed', Number(btn.getAttribute('data-digits')) === d ? 'true' : 'false');
+    });
+  }
+  setDigits(digits);
+
+  function persist() {
+    var data = { from: fromEl.value, to: toEl.value, digits: digits };
+    if (cfg.extendState) {
+      var extra = cfg.extendState();
+      if (extra) Object.keys(extra).forEach(function (k) { data[k] = extra[k]; });
+    }
+    saveState(cfg.key, data);
+  }
+
+  function clearResult(message, invalid) {
+    errEl.textContent = message || '';
+    if (invalid) amountEl.setAttribute('aria-invalid', 'true');
+    else amountEl.removeAttribute('aria-invalid');
+    resultEl.textContent = '—';
+    delete resultEl.dataset.raw;
+    rawResult = null;
+    copyBtn.disabled = true;
+    if (cfg.onClear) cfg.onClear();
+  }
+
+  function convert() {
+    var n = parseNum(amountEl.value);
+    if (n === null) {
+      clearResult('', false);
+      captionEl.textContent = 'Enter a number. A comma or a dot can mark the decimal.';
+      return;
+    }
+    if (Number.isNaN(n)) {
+      clearResult('Enter a number. A comma or a dot can mark the decimal.', true);
+      captionEl.textContent = '';
+      return;
+    }
+    var problem = cfg.validate ? cfg.validate(n, fromEl.value, toEl.value) : '';
+    if (problem) {
+      clearResult(problem, true);
+      captionEl.textContent = '';
+      return;
+    }
+    var out = cfg.convert(n, fromEl.value, toEl.value);
+    if (!Number.isFinite(out)) {
+      clearResult('That conversion is not available.', true);
+      captionEl.textContent = '';
+      return;
+    }
+    rawResult = plainNum(out, digits);
+    resultEl.dataset.raw = rawResult;
+    resultEl.textContent = formatNum(out, digits) + '\u00a0' + unitShort(toEl.value);
+    var ctx = { amount: n, from: fromEl.value, to: toEl.value, out: out, digits: digits };
+    if (cfg.caption) cfg.caption(captionEl, ctx);
+    else if (ctx.from === ctx.to) captionEl.textContent = 'Same unit, so the value does not change. Shown to ' + digits + ' decimal places.';
+    else captionEl.textContent = 'Exact value ' + formatNum(out, 8) + ' ' + unitShort(toEl.value) + ', shown to ' + digits + ' decimal places.';
+    copyBtn.disabled = false;
+    if (cfg.after) cfg.after(ctx);
+    persist();
+  }
+
+  amountEl.addEventListener('input', convert);
+  fromEl.addEventListener('change', convert);
+  toEl.addEventListener('change', convert);
+  swapBtn.addEventListener('click', function () {
+    var a = fromEl.value;
+    fromEl.value = toEl.value;
+    toEl.value = a;
+    convert();
+  });
+  root.querySelectorAll('[data-digits]').forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      setDigits(Number(btn.getAttribute('data-digits')));
+      convert();
+    });
+  });
+  root.addEventListener('submit', function (e) {
+    e.preventDefault();
+    convert();
+  });
+  copyBtn.addEventListener('click', function () {
+    if (rawResult == null) return;
+    var done = function () {
+      copyBtn.textContent = 'Copied';
+      window.setTimeout(function () { copyBtn.textContent = 'Copy'; }, 1500);
+    };
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(rawResult).then(done).catch(function () { fallbackCopy(rawResult, done, captionEl); });
+    } else fallbackCopy(rawResult, done, captionEl);
+  });
+  convert();
+  return {
+    convert: convert,
+    fromEl: fromEl,
+    toEl: toEl,
+    amountEl: amountEl,
+    getDigits: function () { return digits; }
+  };
+}
+
+var CITIES = [{"id":"bangkok","name":"Bangkok","zone":"Asia/Bangkok"},{"id":"brussels","name":"Brussels","zone":"Europe/Brussels"},{"id":"amsterdam","name":"Amsterdam","zone":"Europe/Amsterdam"},{"id":"london","name":"London","zone":"Europe/London"},{"id":"newyork","name":"New York","zone":"America/New_York"},{"id":"tokyo","name":"Tokyo","zone":"Asia/Tokyo"},{"id":"losangeles","name":"Los Angeles","zone":"America/Los_Angeles"},{"id":"chicago","name":"Chicago","zone":"America/Chicago"},{"id":"denver","name":"Denver","zone":"America/Denver"},{"id":"singapore","name":"Singapore","zone":"Asia/Singapore"},{"id":"hongkong","name":"Hong Kong","zone":"Asia/Hong_Kong"},{"id":"shanghai","name":"Shanghai","zone":"Asia/Shanghai"},{"id":"dubai","name":"Dubai","zone":"Asia/Dubai"},{"id":"kolkata","name":"Kolkata","zone":"Asia/Kolkata"},{"id":"sydney","name":"Sydney","zone":"Australia/Sydney"},{"id":"auckland","name":"Auckland","zone":"Pacific/Auckland"},{"id":"paris","name":"Paris","zone":"Europe/Paris"},{"id":"berlin","name":"Berlin","zone":"Europe/Berlin"},{"id":"utc","name":"UTC","zone":"Etc/UTC"}];
+
+var DEFAULTS = ["bangkok", "brussels", "amsterdam", "london", "newyork", "tokyo"];
+function cityById(id) {
+  for (var i = 0; i < CITIES.length; i++) if (CITIES[i].id === id) return CITIES[i];
+  return null;
+}
+function formatInput(utcMs, timeZone) {
+  var dtf = new Intl.DateTimeFormat("en-CA", {
+    timeZone: timeZone, hourCycle: "h23",
+    year: "numeric", month: "2-digit", day: "2-digit",
+    hour: "2-digit", minute: "2-digit"
+  });
+  var map = {};
+  dtf.formatToParts(new Date(utcMs)).forEach(function (p) { if (p.type !== "literal") map[p.type] = p.value; });
+  var hour = map.hour === "24" ? "00" : map.hour;
+  return map.year + "-" + map.month + "-" + map.day + "T" + hour + ":" + map.minute;
+}
+function formatCity(utcMs, timeZone) {
+  return new Intl.DateTimeFormat("en-GB", {
+    timeZone: timeZone, hourCycle: "h23",
+    weekday: "short", day: "numeric", month: "short", year: "numeric",
+    hour: "2-digit", minute: "2-digit", timeZoneName: "short"
+  }).format(new Date(utcMs));
+}
+function offsetLabel(utcMs, timeZone) {
+  var off = zoneOffsetMs(utcMs, timeZone);
+  var sign = off >= 0 ? "+" : "-";
+  var mins = Math.round(Math.abs(off) / 60000);
+  var h = Math.floor(mins / 60);
+  var m = mins % 60;
+  function pad(n) { return (n < 10 ? "0" : "") + n; }
+  return "UTC" + sign + pad(h) + ":" + pad(m);
+}
+var saved = loadState("unitpulse:timezone", { source: "bangkok", cities: DEFAULTS });
+var cities = (saved.cities || []).filter(cityById);
+if (!cities.length) cities = DEFAULTS.slice();
+var sourceId = (cityById(saved.source) && cities.indexOf(saved.source) !== -1) ? saved.source : cities[0];
+var whenEl = document.getElementById("when");
+var sourceSel = document.getElementById("sourceCity");
+var cityRows = document.getElementById("cityRows");
+var tzError = document.getElementById("tzError");
+var tzCaption = document.getElementById("tzCaption");
+var addSel = document.getElementById("addCity");
+var addBtn = document.getElementById("addBtn");
+var swapBtn = document.getElementById("swapCity");
+var copyBtn = document.getElementById("copyTimes");
+var copyLines = [];
+function persist() { saveState("unitpulse:timezone", { source: sourceId, cities: cities }); }
+function fillSource() {
+  sourceSel.textContent = "";
+  cities.forEach(function (id) {
+    var c = cityById(id);
+    var o = document.createElement("option");
+    o.value = c.id;
+    o.textContent = c.name;
+    sourceSel.appendChild(o);
+  });
+  sourceSel.value = sourceId;
+}
+function fillAdd() {
+  addSel.textContent = "";
+  CITIES.forEach(function (c) {
+    if (cities.indexOf(c.id) !== -1) return;
+    var o = document.createElement("option");
+    o.value = c.id;
+    o.textContent = c.name;
+    addSel.appendChild(o);
+  });
+  var empty = addSel.options.length === 0;
+  addSel.disabled = empty;
+  addBtn.disabled = empty;
+}
+function renderLists() { fillSource(); fillAdd(); swapBtn.disabled = cities.length < 2; }
+function renderRows() {
+  copyLines = [];
+  cityRows.textContent = "";
+  tzError.textContent = "";
+  var match = /^(\d{4})-(\d{2})-(\d{2})T(\d{2}):(\d{2})/.exec(whenEl.value);
+  if (!match) {
+    tzError.textContent = "Choose a date and time.";
+    tzCaption.textContent = "";
+    copyBtn.disabled = true;
+    return;
+  }
+  var year = Number(match[1]);
+  if (year < 1900 || year > 2100) {
+    tzError.textContent = "Choose a year from 1900 to 2100.";
+    tzCaption.textContent = "";
+    copyBtn.disabled = true;
+    return;
+  }
+  var source = cityById(sourceId);
+  var utc;
+  try { utc = zonedTimeToUtc(year, Number(match[2]), Number(match[3]), Number(match[4]), Number(match[5]), source.zone); }
+  catch (e) { utc = NaN; }
+  if (!Number.isFinite(utc)) {
+    tzError.textContent = "That date could not be read in " + source.name + ".";
+    tzCaption.textContent = "";
+    copyBtn.disabled = true;
+    return;
+  }
+  cities.forEach(function (id) {
+    var city = cityById(id);
+    var row = document.createElement("div");
+    row.className = "city-row";
+    var name = document.createElement("div");
+    name.className = "city-name";
+    name.appendChild(document.createTextNode(city.name));
+    if (id === sourceId) {
+      var badge = document.createElement("span");
+      badge.className = "pill pill-tint";
+      badge.textContent = "Source";
+      name.appendChild(badge);
+    }
+    var time = document.createElement("div");
+    time.className = "city-time";
+    var shown = formatCity(utc, city.zone);
+    time.appendChild(document.createTextNode(shown));
+    var off = document.createElement("span");
+    off.className = "city-off";
+    var offText = offsetLabel(utc, city.zone);
+    off.textContent = offText;
+    time.appendChild(off);
+    var actions = document.createElement("div");
+    actions.className = "city-actions";
+    if (id !== sourceId) {
+      var use = document.createElement("button");
+      use.type = "button";
+      use.className = "btn btn-ghost";
+      use.setAttribute("data-action", "source");
+      use.setAttribute("data-id", id);
+      use.textContent = "Use as source";
+      actions.appendChild(use);
+    }
+    if (cities.length > 1) {
+      var rm = document.createElement("button");
+      rm.type = "button";
+      rm.className = "btn btn-outlined";
+      rm.setAttribute("data-action", "remove");
+      rm.setAttribute("data-id", id);
+      rm.textContent = "Remove";
+      rm.setAttribute("aria-label", "Remove " + city.name);
+      actions.appendChild(rm);
+    }
+    row.appendChild(name);
+    row.appendChild(time);
+    row.appendChild(actions);
+    cityRows.appendChild(row);
+    copyLines.push(city.name + ": " + shown + " (" + offText + ")");
+  });
+  var resolved = formatInput(utc, source.zone);
+  if (resolved !== whenEl.value.slice(0, 16)) {
+    tzCaption.textContent = "That clock time is not a single valid moment in " + source.name + " (daylight saving). Other cities follow the nearest moment your browser returns.";
+  } else {
+    tzCaption.textContent = "Times use your browser time-zone data, including daylight saving.";
+  }
+  copyBtn.disabled = false;
+}
+if (!whenEl.value) whenEl.value = formatInput(Date.now(), cityById(sourceId).zone);
+renderLists();
+renderRows();
+whenEl.addEventListener("input", renderRows);
+sourceSel.addEventListener("change", function () {
+  sourceId = sourceSel.value;
+  persist();
+  renderRows();
+});
+swapBtn.addEventListener("click", function () {
+  var i = cities.indexOf(sourceId);
+  sourceId = cities[(i + 1) % cities.length];
+  sourceSel.value = sourceId;
+  persist();
+  renderRows();
+});
+addBtn.addEventListener("click", function () {
+  var id = addSel.value;
+  if (!id || cities.indexOf(id) !== -1) return;
+  cities.push(id);
+  persist();
+  renderLists();
+  renderRows();
+});
+cityRows.addEventListener("click", function (e) {
+  var btn = e.target.closest("button");
+  if (!btn) return;
+  var id = btn.getAttribute("data-id");
+  if (btn.getAttribute("data-action") === "remove") {
+    if (cities.length < 2) return;
+    cities = cities.filter(function (c) { return c !== id; });
+    if (cities.indexOf(sourceId) === -1) sourceId = cities[0];
+    persist();
+    renderLists();
+    renderRows();
+  }
+  if (btn.getAttribute("data-action") === "source") {
+    sourceId = id;
+    persist();
+    renderLists();
+    renderRows();
+  }
+});
+document.getElementById("tz-form").addEventListener("submit", function (e) { e.preventDefault(); renderRows(); });
+copyBtn.addEventListener("click", function () {
+  if (!copyLines.length) return;
+  var text = copyLines.join("\n");
+  var done = function () {
+    copyBtn.textContent = "Copied";
+    setTimeout(function () { copyBtn.textContent = "Copy"; }, 1500);
+  };
+  if (navigator.clipboard && navigator.clipboard.writeText) {
+    navigator.clipboard.writeText(text).then(done).catch(function () { fallbackCopy(text, done, tzCaption); });
+  } else fallbackCopy(text, done, tzCaption);
+});
+
+</script>
+</body>
+</html>
